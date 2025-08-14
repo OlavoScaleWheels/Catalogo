@@ -7,6 +7,7 @@
   <meta name="description" content="Catálogo por artigos – preenche automaticamente a partir do ID (MMM.CCC.TT)" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    html { scroll-behavior: smooth; }
     ::-webkit-scrollbar { height: 8px; width: 8px; }
     ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
 
@@ -26,8 +27,9 @@
 <body class="bg-neutral-950 text-white selection:bg-yellow-400 selection:text-black">
   <!-- Header -->
   <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/70 border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+      <!-- Logo + título -->
+      <div class="flex items-center gap-3 flex-shrink-0">
         <div class="size-9 rounded-full bg-yellow-400 flex items-center justify-center">
           <span class="text-black font-extrabold">OSW</span>
         </div>
@@ -37,7 +39,18 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
+      <!-- NAV: horizontal (desktop) -->
+      <nav class="hidden md:flex items-center gap-1 ml-auto mr-2">
+        <a href="#destaques" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Destaques</a>
+        <a href="#catalogo" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Catálogo</a>
+        <a href="#como-comprar" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Como comprar</a>
+        <a href="#sobre" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Sobre</a>
+        <a href="#faq" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Dúvidas frequentes</a>
+        <a href="#contato" class="px-3 py-2 rounded-lg text-sm bg-yellow-400 text-black font-semibold hover:brightness-95">Fale conosco</a>
+      </nav>
+
+      <!-- Busca + carrinho -->
+      <div class="flex items-center gap-2 flex-shrink-0">
         <label class="relative hidden sm:block">
           <input id="searchInput" type="search" placeholder="Buscar código ou modelo..." class="w-64 bg-white/5 border border-white/10 rounded-xl px-3 py-2 pl-9 text-sm outline-none focus:border-yellow-400/60" />
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-white/50 absolute left-2.5 top-1/2 -translate-y-1/2">
@@ -54,11 +67,23 @@
         </button>
       </div>
     </div>
+
+    <!-- NAV compacto (mobile) -->
+    <div class="md:hidden border-t border-white/10 overflow-x-auto scrollbar-none">
+      <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-1 text-sm whitespace-nowrap">
+        <a href="#destaques" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Destaques</a>
+        <a href="#catalogo" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Catálogo</a>
+        <a href="#como-comprar" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Como comprar</a>
+        <a href="#sobre" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Sobre</a>
+        <a href="#faq" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Dúvidas frequentes</a>
+        <a href="#contato" class="px-3 py-1.5 rounded-lg bg-yellow-400 text-black font-semibold hover:brightness-95">Fale conosco</a>
+      </div>
+    </div>
   </header>
 
   <main>
     <!-- Destaques / Carousel Top 10 -->
-    <section class="max-w-7xl mx-auto px-4 pt-8">
+    <section id="destaques" class="max-w-7xl mx-auto px-4 pt-8 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Mais vendidas</h2>
         <div class="text-xs sm:text-sm text-white/60">Top 10 da loja</div>
@@ -102,8 +127,30 @@
       </div>
     </section>
 
+    <!-- Como comprar -->
+    <section id="como-comprar" class="max-w-7xl mx-auto px-4 pt-2 scroll-mt-24">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-bold">Como comprar</h2>
+        <div class="text-xs sm:text-sm text-white/60">Passo a passo</div>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <div class="text-white/60 text-sm mb-1">1. Escolha os itens</div>
+          <p class="text-white/80 text-sm">Use a busca ou navegue pelo catálogo. Selecione a quantidade e clique em <em>Adicionar ao carrinho</em>.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <div class="text-white/60 text-sm mb-1">2. Defina o envio</div>
+          <p class="text-white/80 text-sm">No carrinho, escolha a opção de envio. O total com envio aparece automaticamente.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <div class="text-white/60 text-sm mb-1">3. Finalize no WhatsApp</div>
+          <p class="text-white/80 text-sm">Clique em <em>Enviar pedido via WhatsApp</em> e confirme seu pedido diretamente conosco.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Catálogo -->
-    <section class="max-w-7xl mx-auto px-4 pt-2 pb-24">
+    <section id="catalogo" class="max-w-7xl mx-auto px-4 pt-2 pb-24 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Catálogo completo</h2>
         <div class="text-xs sm:text-sm text-white/60">Selecione a quantidade e adicione ao carrinho</div>
@@ -114,6 +161,38 @@
 
       <!-- Controles de Paginação -->
       <div id="pagination" class="mt-8 flex items-center justify-center gap-2 flex-wrap"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="max-w-7xl mx-auto px-4 pt-2 pb-12 scroll-mt-24">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-bold">Dúvidas frequentes</h2>
+      </div>
+      <div class="space-y-3">
+        <details class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <summary class="cursor-pointer font-medium">Quais são as opções de envio?</summary>
+          <p class="text-white/80 mt-2 text-sm">Trabalhamos com Vinted/Wallapop (valor a calcular) e Correios (Portugal/Nacional/Internacional) com valores fixos exibidos no carrinho.</p>
+        </details>
+        <details class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <summary class="cursor-pointer font-medium">Como faço o pagamento?</summary>
+          <p class="text-white/80 mt-2 text-sm">Finalizamos pelo WhatsApp; combinamos o método de pagamento e confirmamos o envio.</p>
+        </details>
+        <details class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <summary class="cursor-pointer font-medium">Posso comprar tamanhos diferentes do mesmo modelo?</summary>
+          <p class="text-white/80 mt-2 text-sm">Sim. Cada código identifica modelo/cor/tamanho. Adicione as variações desejadas ao carrinho.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre" class="max-w-7xl mx-auto px-4 pt-2 pb-12 scroll-mt-24">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-bold">Sobre a OLAVO SCALE WHEELS</h2>
+      </div>
+      <p class="text-white/80 text-sm leading-relaxed">
+        Produzimos rodas em miniatura com alto padrão de acabamento, inspiradas em modelos clássicos e modernos. Este é um catálogo simples
+        pensado para compras rápidas via WhatsApp, com envio para Portugal, nacional e internacional.
+      </p>
     </section>
   </main>
 
@@ -183,6 +262,18 @@
   </aside>
   <div id="backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40"></div>
 
+  <!-- Contato -->
+  <section id="contato" class="max-w-7xl mx-auto px-4 pb-10 scroll-mt-24">
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+      <h2 class="text-xl sm:text-2xl font-bold mb-2">Fale conosco</h2>
+      <p class="text-white/80 text-sm mb-4">Tem alguma dúvida ou quer um orçamento rápido? Chame a gente no WhatsApp.</p>
+      <div class="flex flex-wrap items-center gap-3">
+        <button id="contactWhats" class="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-xl hover:brightness-95">Abrir WhatsApp</button>
+        <span class="text-white/60 text-sm">Ou finalize um pedido pelo carrinho.</span>
+      </div>
+    </div>
+  </section>
+
   <footer class="border-t border-white/10 py-8 text-center text-sm text-white/50">
     © <span id="year"></span> OLAVO SCALE WHEELS — Todos os direitos reservados.
   </footer>
@@ -241,7 +332,6 @@
     }
 
     // >>> Só manter esta lista simples. O resto se completa.
-    // Você pode opcionalmente adicionar |preco no id (ex.: "031.001.11|19.90")
     const PRODUCTS_RAW = [
       { id: "031.001.11|19.90", estoque: 8 },
       { id: "031.002.11|19,90", estoque: 6 },
@@ -286,10 +376,10 @@
     const state = {
       cart: JSON.parse(localStorage.getItem("osw_cart") || "[]"),
       get totalItems(){ return this.cart.reduce((s,it)=>s+it.qty,0); },
-      shipping: { method: null }, // 'vinted' | 'wallapop' | 'correio_azul' | 'correio_registrado' | 'correio_internacional' | null
-      query: "",                  // texto de busca
-      page: 1,                    // página atual da listagem
-      pageSize: 12                // quantidade de cards por página
+      shipping: { method: null },
+      query: "",
+      page: 1,
+      pageSize: 12
     };
     function saveCart(){ localStorage.setItem("osw_cart", JSON.stringify(state.cart)); updateCartBadge(); renderCart(); updateTotals(); }
 
@@ -331,7 +421,6 @@
           </div>
           <div class="text-sm ${p.estoque ? 'text-green-400' : 'text-red-400'}">${p.estoque ? p.estoque + ' disponíveis' : 'Esgotado'}</div>
 
-          <!-- Linha da quantidade (esquerda) + preço (direita), acima do botão  -->
           <div class="flex items-center justify-between gap-2">
             <select ${p.estoque ? '' : 'disabled'} data-id="${p.id}" class="qtySelect w-28 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none focus:border-yellow-400/60 disabled:opacity-50">
               ${p.estoque ? Array.from({length: p.estoque}, (_,i)=>`<option value="${i+1}">${i+1}</option>`).join('') : '<option value="" disabled selected>Indisponível</option>'}
@@ -342,10 +431,8 @@
             </div>` : `<div></div>`}
           </div>
 
-          <!-- Botão abaixo, somente com imagem/ícone de carrinho  -->
           <div class="flex">
             <button ${p.estoque ? '' : 'disabled'} data-id="${p.id}" aria-label="Adicionar ao carrinho" title="Adicionar ao carrinho" class="addToCart w-full bg-yellow-400 text-black font-semibold px-3 py-2 rounded-xl hover:brightness-95 active:brightness-90 transition disabled:opacity-50 flex items-center justify-center gap-2">
-              <!-- Ícone genérico de carrinho (substitua por <img src=...> se desejar) -->
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
                 <path d="M2.25 3a.75.75 0 0 1 .75-.75h1.386a1.5 1.5 0 0 1 1.415 1.02l.519 1.557h12.18a.75.75 0 0 1 .728.936l-1.5 6A.75.75 0 0 1 17 12.75H7.03l-.3.9a.75.75 0 0 0 .71 1.05H18a.75.75 0 0 1 0 1.5H7.44a2.25 2.25 0 1 1-2.1-3h.09l1.62-4.86L5.22 5.25H3a.75.75 0 0 1-.75-.75Z"/>
               </svg>
@@ -361,7 +448,6 @@
       container.innerHTML = '';
       if(totalPages <= 1) return;
 
-      // Botão Anterior
       const prev = document.createElement('button');
       prev.textContent = 'Anterior';
       prev.className = 'px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40';
@@ -369,7 +455,6 @@
       prev.addEventListener('click', ()=>{ state.page = Math.max(1, state.page-1); renderCatalog(); window.scrollTo({top:0, behavior:"smooth"}); });
       container.appendChild(prev);
 
-      // Função para criar botão de página
       const makePageBtn = (n, isActive=false)=>{
         const b = document.createElement('button');
         b.textContent = n;
@@ -378,7 +463,6 @@
         container.appendChild(b);
       };
 
-      // Desenho com elipses quando há muitas páginas
       const tp = totalPages;
       const cp = state.page;
       if(tp <= 10){
@@ -397,7 +481,6 @@
         makePageBtn(tp, cp===tp);
       }
 
-      // Botão Próxima
       const next = document.createElement('button');
       next.textContent = 'Próxima';
       next.className = 'px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40';
@@ -410,7 +493,6 @@
       const grid = document.getElementById("catalogGrid");
       const empty = document.getElementById("emptyState");
 
-      // Se vier um filterText, atualiza query e só reseta page se a query mudou
       if(filterText !== undefined){
         const q = String(filterText || '').trim().toLowerCase();
         const changed = q !== state.query;
@@ -418,23 +500,17 @@
         if(changed) state.page = 1;
       }
 
-      // Filtra primeiro
       const filtered = PRODUCTS.filter(p => !state.query || p.codigo.toLowerCase().includes(state.query) || p.modelo.toLowerCase().includes(state.query));
-
-      // Calcula paginação
       const totalPages = Math.max(1, Math.ceil(filtered.length / state.pageSize));
       if(state.page > totalPages) state.page = totalPages;
       const start = (state.page - 1) * state.pageSize;
       const visible = filtered.slice(start, start + state.pageSize);
 
-      // Renderiza os cards
       grid.innerHTML = "";
       visible.forEach(p=> grid.appendChild(createCard(p)) );
 
-      // Estado vazio
       empty.classList.toggle("hidden", filtered.length>0);
 
-      // Eventos dos botões "Adicionar ao carrinho"
       grid.querySelectorAll('.addToCart').forEach(btn => btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
         const prod = PRODUCTS.find(p=>p.id===id);
@@ -443,7 +519,6 @@
         addToCart(prod, qty);
       }));
 
-      // Renderiza os controles de paginação
       renderPagination(totalPages);
     }
 
@@ -516,7 +591,7 @@
         case 'correio_internacional': return COST_INTERNACIONAL;
         case 'vinted':
         case 'wallapop':
-        default: return null; // a calcular ou não selecionado
+        default: return null;
       }
     }
 
@@ -525,7 +600,6 @@
       const shipping = currentShippingCost();
       byId('cartSubtotal').textContent = anyPriced ? formatEUR(sum) : '—';
 
-      // Envio display
       let shippingText = '—';
       if(state.shipping.method === 'correio_azul') shippingText = formatEUR(COST_AZUL);
       else if(state.shipping.method === 'correio_registrado') shippingText = formatEUR(COST_REGISTRADO);
@@ -534,7 +608,6 @@
       else if(state.shipping.method === 'wallapop') shippingText = 'a calcular';
       byId('shippingValue').textContent = shippingText;
 
-      // Grand total
       let grand = sum;
       if(typeof shipping === 'number') grand += shipping;
       byId('cartGrandTotal').textContent = anyPriced ? formatEUR(grand) : '—';
@@ -575,6 +648,13 @@
     }
     function sendToWhatsApp(){ if(!WHATSAPP_NUMBER || /\D/.test(WHATSAPP_NUMBER)){ alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; } const text = buildWhatsAppMessage(); window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank'); }
 
+    // Botão de contato direto (fora do carrinho)
+    function openWhatsDirect(){
+      if(!WHATSAPP_NUMBER || /\D/.test(WHATSAPP_NUMBER)){ alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
+      const text = encodeURIComponent('Olá! Gostaria de tirar uma dúvida.');
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+    }
+
     // ======= UI =======
     const drawer = byId('cartDrawer'); const backdrop = byId('backdrop');
     function openCart(){ drawer.classList.remove('translate-x-full'); backdrop.classList.remove('hidden'); }
@@ -598,6 +678,7 @@
       byId('prevSlide').addEventListener('click', ()=>scrollByCards(-1));
       byId('cartButton').addEventListener('click', openCart); byId('closeCart').addEventListener('click', closeCart); backdrop.addEventListener('click', closeCart);
       byId('whatsCheckout').addEventListener('click', sendToWhatsApp);
+      const contactBtn = byId('contactWhats'); if(contactBtn) contactBtn.addEventListener('click', openWhatsDirect);
       byId('searchInput').addEventListener('input', handleSearch);
       const decodeInput = byId("decodeInput"); if(decodeInput){ decodeInput.addEventListener("input", (e)=> decodeArticle(e.target.value)); }
       let autoScroll; function startAuto(){ autoScroll = setInterval(()=>scrollByCards(1), 3500); } function stopAuto(){ clearInterval(autoScroll); }
