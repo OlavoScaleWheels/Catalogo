@@ -262,6 +262,62 @@
   </aside>
   <div id="backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40"></div>
 
+      <!-- Formas de pagamento -->
+    <section id="pagamento" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-bold">Formas de pagamento</h2>
+        <div class="text-xs sm:text-sm text-white/60">Escolha ao finalizar o pedido</div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <!-- PayPal -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
+          <img
+            src="./images/payments/paypal.svg" alt="PayPal" class="h-10"
+            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+          />
+          <span class="hidden text-sm font-medium">PayPal</span>
+        </div>
+
+        <!-- Transferência bancária -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
+          <img
+            src="./images/payments/bank-transfer.svg" alt="Transferência bancária" class="h-10"
+            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+          />
+          <span class="hidden text-sm font-medium">Transferência bancária</span>
+        </div>
+
+        <!-- MB Way -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
+          <img
+            src="./images/payments/mbway.svg" alt="MB Way" class="h-10"
+            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+          />
+          <span class="hidden text-sm font-medium">MB Way</span>
+        </div>
+
+        <!-- Vinted -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
+          <img
+            src="./images/payments/vinted.svg" alt="Vinted" class="h-10"
+            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+          />
+          <span class="hidden text-sm font-medium">Vinted</span>
+        </div>
+
+        <!-- Wallapop -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
+          <img
+            src="./images/payments/wallapop.svg" alt="Wallapop" class="h-10"
+            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+          />
+          <span class="hidden text-sm font-medium">Wallapop</span>
+        </div>
+      </div>
+    </section>
+
+
   <!-- Contato -->
   <section id="contato" class="max-w-7xl mx-auto px-4 pb-10 scroll-mt-24">
     <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
