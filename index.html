@@ -439,7 +439,27 @@
             </button>
           </div>
         </div>
-      `; return card;
+      `;
+
+      /* ===== HOVER NA FOTO: trocar 0001.jpg -> 0002.jpg ===== */
+      const imgEl = card.querySelector('img');
+      const originalSrc = p.img;
+      const hoverSrc = originalSrc.replace(/\/0001(\.\w+)?$/, '/0002$1');
+
+      imgEl.addEventListener('mouseenter', () => {
+        if (hoverSrc && hoverSrc !== originalSrc) {
+          const revert = () => { imgEl.setAttribute('src', originalSrc); imgEl.removeEventListener('error', revert); };
+          imgEl.addEventListener('error', revert, { once: true });
+          imgEl.setAttribute('src', hoverSrc);
+        }
+      });
+
+      imgEl.addEventListener('mouseleave', () => {
+        imgEl.setAttribute('src', originalSrc);
+      });
+      /* ============================================= */
+
+      return card;
     }
 
     // ======= PAGINAÇÃO =======
