@@ -5,23 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Olavo Scale Wheels | Catálogo (Artigos por ID)</title>
   <meta name="description" content="Catálogo por artigos — preenche automaticamente a partir do ID (MMM.CCC.TT)" />
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Seus estilos extras -->
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- App JS -->
   <script src="app.js" defer></script>
 </head>
 <body class="bg-neutral-950 text-white selection:bg-yellow-400 selection:text-black">
-  <!-- Header -->
   <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/70 border-b border-white/10">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
-      <!-- Logo + título -->
       <div class="flex items-center gap-3 flex-shrink-0">
-        <div class="size-9 rounded-full bg-yellow-400 flex items-center justify-center">
+        <div class="size-9 rounded-full bg-yellow-400 grid place-items-center">
           <span class="text-black font-extrabold">OSW</span>
         </div>
         <div>
@@ -30,7 +22,6 @@
         </div>
       </div>
 
-      <!-- NAV: horizontal (desktop) -->
       <nav class="hidden md:flex items-center gap-1 ml-auto mr-2">
         <a href="#destaques" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Destaques</a>
         <a href="#catalogo" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Catálogo</a>
@@ -41,7 +32,6 @@
         <a href="#contato" class="px-3 py-2 rounded-lg text-sm bg-yellow-400 text-black font-semibold hover:brightness-95">Fale conosco</a>
       </nav>
 
-      <!-- Busca + carrinho -->
       <div class="flex items-center gap-2 flex-shrink-0">
         <label class="relative hidden sm:block">
           <input id="searchInput" type="search" placeholder="Buscar código ou modelo..." class="w-64 bg-white/5 border border-white/10 rounded-xl px-3 py-2 pl-9 text-sm outline-none focus:border-yellow-400/60" />
@@ -52,7 +42,7 @@
 
         <button id="cartButton" class="relative inline-flex items-center gap-2 bg-yellow-400 text-black font-semibold px-3 py-2 rounded-xl hover:brightness-95 active:brightness-90 transition">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-            <path d="M2.25 3a.75.75 0 0 1 .75-.75h1.386a1.5 1.5 0 0 1 1.415 1.02l.519 1.557h12.18a.75.75 0 0 1 .728.936l-1.5 6A.75.75 0  1 1 17 12.75H7.03l-.3.9a.75.75 0 0 0 .71 1.05H18a.75.75 0 0 1 0 1.5H7.44a2.25 2.25 0 1 1-2.1-3h.09l1.62-4.86L5.22 5.25H3a.75.75 0 0 1-.75-.75Z"/>
+            <path d="M2.25 3a.75.75 0 0 1 .75-.75h1.386a1.5 1.5 0 0 1 1.415 1.02l.519 1.557h12.18a.75.75 0 0 1 .728.936l-1.5 6A.75.75 0 0 1 17 12.75H7.03l-.3.9a.75.75 0 0 0 .71 1.05H18a.75.75 0 0 1 0 1.5H7.44a2.25 2.25 0 1 1-2.1-3h.09l1.62-4.86L5.22 5.25H3a.75.75 0 0 1-.75-.75Z"/>
           </svg>
           <span>Carrinho</span>
           <span id="cartCount" class="absolute -right-2 -top-2 text-xs bg-black text-yellow-400 border border-yellow-400 rounded-full px-1.5 py-0.5">0</span>
@@ -60,7 +50,6 @@
       </div>
     </div>
 
-    <!-- NAV compacto (mobile) -->
     <div class="md:hidden border-t border-white/10 overflow-x-auto scrollbar-none">
       <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-1 text-sm whitespace-nowrap">
         <a href="#destaques" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Destaques</a>
@@ -75,13 +64,11 @@
   </header>
 
   <main>
-    <!-- Destaques / Carousel Top 10 -->
     <section id="destaques" class="max-w-7xl mx-auto px-4 pt-8 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Mais vendidas</h2>
         <div class="text-xs sm:text-sm text-white/60">Top 10 da loja</div>
       </div>
-
       <div class="relative">
         <div id="carouselTrack" class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"></div>
         <div class="flex items-center justify-end gap-2 mt-2">
@@ -91,28 +78,27 @@
       </div>
     </section>
 
-    <!-- Guia de leitura do código -->
     <section class="max-w-7xl mx-auto px-4 pt-6">
       <div class="mb-6 bg-white/5 border border-white/10 rounded-2xl p-5">
         <h2 class="text-xl font-bold mb-3">Como ler o código das rodas</h2>
-        <p class="text-white/80 text-sm mb-3">Formato geral: <code class="bg-black/30 px-2 py-1 rounded">MMM.CCC.TT</code></p>
+        <p class="text-white/80 text-sm mb-3">Formato: <code class="bg-black/30 px-2 py-1 rounded">MMM.CCC.TT</code></p>
         <ul class="list-disc pl-5 space-y-1 text-sm text-white/80">
-          <li><strong>MMM</strong> = <em>Modelo</em> (3 dígitos). Ex.: <code>031</code> → modelo 031.</li>
-          <li><strong>CCC</strong> = <em>Cor</em> (3 dígitos). Ex.: <code>001</code> = Cromado, <code>002</code> = Dourado, <code>003</code> = Preto, <code>020</code> = Azul.</li>
-          <li><strong>TT</strong> = <em>Tamanho</em>. Pode ter ponto ou vírgula. Ex.: <code>11</code>, <code>10</code>, <code>12,5</code>.</li>
+          <li><strong>MMM</strong> = modelo (3 dígitos)</li>
+          <li><strong>CCC</strong> = cor (3 dígitos)</li>
+          <li><strong>TT</strong> = tamanho (ponto ou vírgula)</li>
         </ul>
         <div class="grid sm:grid-cols-2 gap-3 mt-4 text-sm">
           <div class="bg-black/20 rounded-xl p-3 border border-white/5">
             <div class="text-white/60 mb-1">Exemplos</div>
             <ul class="space-y-1">
-              <li><code>031.001.11</code> → Modelo <strong>031</strong>, Cor <strong>001 (Cromado)</strong>, Tamanho <strong>11</strong></li>
-              <li><code>031.002.11</code> → Modelo <strong>031</strong>, Cor <strong>002 (Dourado)</strong>, Tamanho <strong>11</strong></li>
-              <li><code>031.003.10</code> → Modelo <strong>031</strong>, Cor <strong>003 (Preto)</strong>, Tamanho <strong>10</strong></li>
-              <li><code>031.020.12,5</code> → Modelo <strong>031</strong>, Cor <strong>020 (Azul)</strong>, Tamanho <strong>12,5</strong></li>
+              <li><code>031.001.11</code> → Modelo 031, Cor 001 (Cromado), Tam 11</li>
+              <li><code>031.002.11</code> → Modelo 031, Cor 002 (Dourado), Tam 11</li>
+              <li><code>031.003.10</code> → Modelo 031, Cor 003 (Preto), Tam 10</li>
+              <li><code>031.020.12,5</code> → Modelo 031, Cor 020 (Azul), Tam 12,5</li>
             </ul>
           </div>
           <div class="bg-black/20 rounded-xl p-3 border border-white/5">
-            <label class="block text-white/80 mb-2">Digite um código para decodificar</label>
+            <label class="block text-white/80 mb-2">Digite um código</label>
             <input id="decodeInput" type="text" placeholder="ex.: 031.001.11" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 outline-none focus:border-yellow-400/60">
             <div id="decodeOut" class="mt-2 text-white/80"></div>
           </div>
@@ -120,110 +106,75 @@
       </div>
     </section>
 
-    <!-- Como comprar -->
     <section id="como-comprar" class="max-w-7xl mx-auto px-4 pt-2 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Como comprar</h2>
         <div class="text-xs sm:text-sm text-white/60">Passo a passo</div>
       </div>
       <div class="grid sm:grid-cols-3 gap-4">
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
-          <div class="text-white/60 text-sm mb-1">1. Escolha os itens</div>
-          <p class="text-white/80 text-sm">Use a busca ou navegue pelo catálogo. Selecione a quantidade e clique em <em>Adicionar ao carrinho</em>.</p>
-        </div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
-          <div class="text-white/60 text-sm mb-1">2. Defina o envio</div>
-          <p class="text-white/80 text-sm">No carrinho, escolha a opção de envio. O total com envio aparece automaticamente.</p>
-        </div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
-          <div class="text-white/60 text-sm mb-1">3. Finalize no WhatsApp</div>
-          <p class="text-white/80 text-sm">Clique em <em>Enviar pedido via WhatsApp</em> e confirme seu pedido diretamente conosco.</p>
-        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5"><div class="text-white/60 text-sm mb-1">1. Escolha os itens</div><p class="text-white/80 text-sm">Use a busca ou o catálogo. Selecione a quantidade e clique em <em>Adicionar ao carrinho</em>.</p></div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5"><div class="text-white/60 text-sm mb-1">2. Defina o envio</div><p class="text-white/80 text-sm">No carrinho, escolha a opção de envio. O total aparece automaticamente.</p></div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5"><div class="text-white/60 text-sm mb-1">3. Finalize no WhatsApp</div><p class="text-white/80 text-sm">Clique em <em>Enviar pedido via WhatsApp</em> e confirme o pedido.</p></div>
       </div>
     </section>
 
-    <!-- Catálogo -->
     <section id="catalogo" class="max-w-7xl mx-auto px-4 pt-2 pb-24 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Catálogo completo</h2>
-        <div class="text-xs sm:text-sm text-white/60">Selecione a quantidade e adicione ao carrinho</div>
+        <div class="text-xs sm:text-sm text-white/60">Selecione e adicione ao carrinho</div>
       </div>
-
       <div id="catalogGrid" class="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
       <div id="emptyState" class="hidden text-center text-white/60 mt-10">Nenhum item encontrado para sua busca.</div>
-
-      <!-- Controles de Paginação -->
       <div id="pagination" class="mt-8 flex items-center justify-center gap-2 flex-wrap"></div>
     </section>
 
-    <!-- Depoimentos -->
     <section id="depoimentos" class="max-w-7xl mx-auto px-4 pt-2 pb-6 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">O que dizem os clientes</h2>
         <div class="text-xs sm:text-sm text-white/60">Avaliações reais</div>
       </div>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Três cards de exemplo (conteúdo original mantido) -->
         <article class="bg-white/5 border border-white/10 rounded-2xl p-5">
           <div class="flex items-center gap-3">
-            <div class="relative">
-              <img src="./images/avatars/generic1.webp" alt="João Martins" class="h-14 w-14 rounded-full object-cover ring-2 ring-yellow-400/60 bg-black/30"
-                   onerror="this.classList.add('hidden'); this.parentElement.querySelector('.avatar-fallback').classList.remove('hidden');">
-              <div class="avatar-fallback hidden h-14 w-14 rounded-full grid place-items-center ring-2 ring-yellow-400/60 bg-white/10 text-white/70 text-sm font-semibold">JM</div>
-            </div>
+            <img src="./images/avatars/generic1.webp" alt="João Martins" class="h-14 w-14 rounded-full object-cover ring-2 ring-yellow-400/60 bg-black/30">
             <div>
               <div class="font-semibold leading-tight">João Martins <span class="ml-1">🇵🇹</span></div>
               <div class="flex items-center gap-0.5" aria-label="5 de 5 estrelas">
-                <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg>
               </div>
             </div>
           </div>
-          <p class="mt-3 text-sm text-white/80">Montagem super fácil e o ajuste ficou perfeito no meu modelo. Envio muito rápido — chegou em dois dias. Recomendo!</p>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="px-2 py-1 rounded-lg text-[11px] bg-yellow-400/10 border border-yellow-400/30 text-yellow-300">Facilidade de montagem</span>
-            <span class="px-2 py-1 rounded-lg text-[11px] bg-yellow-400/10 border border-yellow-400/30 text-yellow-300">Rapidez no envio</span>
-            <span class="px-2 py-1 rounded-lg text-[11px] bg-yellow-400/10 border border-yellow-400/30 text-yellow-300">Qualidade do produto</span>
-          </div>
+          <p class="mt-3 text-sm text-white/80">Montagem super fácil e ajuste perfeito. Envio muito rápido. Recomendo!</p>
         </article>
 
-        <!-- (outros 2 cards mantidos como estavam)… -->
         <article class="bg-white/5 border border-white/10 rounded-2xl p-5">
           <div class="flex items-center gap-3">
-            <div class="relative">
-              <img src="./images/avatars/generic2.webp" alt="Ana Ferreira" class="h-14 w-14 rounded-full object-cover ring-2 ring-yellow-400/60 bg-black/30"
-                   onerror="this.classList.add('hidden'); this.parentElement.querySelector('.avatar-fallback').classList.remove('hidden');">
-              <div class="avatar-fallback hidden h-14 w-14 rounded-full grid place-items-center ring-2 ring-yellow-400/60 bg-white/10 text-white/70 text-sm font-semibold">AF</div>
-            </div>
+            <img src="./images/avatars/generic2.webp" alt="Ana Ferreira" class="h-14 w-14 rounded-full object-cover ring-2 ring-yellow-400/60 bg-black/30">
             <div>
               <div class="font-semibold leading-tight">Ana Ferreira <span class="ml-1">🇵🇹</span></div>
               <div class="flex items-center gap-0.5" aria-label="5 de 5 estrelas">
-                <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg>
               </div>
             </div>
           </div>
-          <p class="mt-3 text-sm text-white/80">Qualidade impecável, com ótimo acabamento. O processo de compra foi simples e claro. Voltarei a comprar.</p>
+          <p class="mt-3 text-sm text-white/80">Qualidade impecável e compra simples. Voltarei a comprar.</p>
         </article>
 
         <article class="bg-white/5 border border-white/10 rounded-2xl p-5">
           <div class="flex items-center gap-3">
-            <div class="relative">
-              <img src="./images/avatars/generic3.webp" alt="Carlos García" class="h-14 w-14 rounded-full object-cover ring-2 ring-yellow-400/60 bg-black/30"
-                   onerror="this.classList.add('hidden'); this.parentElement.querySelector('.avatar-fallback').classList.remove('hidden');">
-              <div class="avatar-fallback hidden h-14 w-14 rounded-full grid place-items-center ring-2 ring-yellow-400/60 bg-white/10 text-white/70 text-sm font-semibold">CG</div>
-            </div>
+            <img src="./images/avatars/generic3.webp" alt="Carlos García" class="h-14 w-14 rounded-full object-cover ring-2 ring-yellow-400/60 bg-black/30">
             <div>
               <div class="font-semibold leading-tight">Carlos García <span class="ml-1">🇪🇸</span></div>
               <div class="flex items-center gap-0.5" aria-label="5 de 5 estrellas">
-                <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.005 5.404.464c1.164.1 1.636 1.546.749 2.305l-4.09 3.47 1.231 5.265c.267 1.145-.964 2.03-1.96 1.425L12 18.354 7.372 21.14c-.996.605-2.226-.28-1.96-1.425l1.23-5.264-4.09-3.47c-.887-.76-.415-2.206.749-2.306l5.405-.463 2.082-5.006Z" clip-rule="evenodd"/></svg>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400" fill="currentColor"><path d="M12 .75 15.09 8.2l7.66.58-5.8 4.92 1.86 7.38L12 17.77 5.19 21.08l1.86-7.38-5.8-4.92 7.66-.58z"/></svg>
               </div>
             </div>
           </div>
-          <p class="mt-3 text-sm text-white/80">Entrega rapidísima y producto de gran calidad. ¡Muy satisfecho!</p>
+          <p class="mt-3 text-sm text-white/80">Entrega rápida e produto de grande qualidade. Muito satisfeito!</p>
         </article>
       </div>
     </section>
 
-    <!-- Carrossel de Trabalhos dos Clientes (abaixo dos depoimentos) -->
     <section id="clientes-trabalhos" class="max-w-7xl mx-auto px-4 pt-2 pb-6 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Trabalhos dos clientes</h2>
@@ -238,7 +189,6 @@
       </div>
     </section>
 
-    <!-- Feedback (form) -->
     <section id="feedback" class="max-w-7xl mx-auto px-4 pt-2 pb-6 scroll-mt-24">
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div class="bg-white/5 border border-white/10 rounded-2xl p-5 sm:col-span-2 lg:col-span-3">
@@ -258,125 +208,65 @@
           </div>
           <div class="mt-4 flex items-center justify-between gap-3">
             <p class="text-xs text-white/60">Ao enviar, abriremos o WhatsApp com a mensagem preenchida.</p>
-            <button id="sendFeedbackBtn" class="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-xl hover:brightness-95 active:brightness-90">
-              Enviar feedback via WhatsApp
-            </button>
+            <button id="sendFeedbackBtn" class="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-xl hover:brightness-95 active:brightness-90">Enviar feedback via WhatsApp</button>
           </div>
         </div>
       </div>
     </section>
-    <!-- Agenda / Onde estaremos -->
-<section id="agenda" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
-  <div class="mb-4 flex items-center justify-between">
-    <h2 class="text-xl sm:text-2xl font-bold">Onde estaremos</h2>
-    <div class="text-xs sm:text-sm text-white/60">Agenda de eventos</div>
-  </div>
 
-  <div class="relative">
-    <!-- palco (aparece apenas um card de cada vez) -->
-    <div id="eventsStage" class="grid place-items-center min-h-[340px]"></div>
+    <section id="agenda" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-bold">Onde estaremos</h2>
+        <div class="text-xs sm:text-sm text-white/60">Agenda de eventos</div>
+      </div>
+      <div class="relative">
+        <div id="eventsStage" class="grid place-items-center min-h-[340px]"></div>
+        <div class="flex items-center justify-end gap-2 mt-2">
+          <button id="eventsPrev" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Evento anterior">‹</button>
+          <button id="eventsNext" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Próximo evento">›</button>
+        </div>
+      </div>
+    </section>
 
-    <!-- setas -->
-    <div class="flex items-center justify-end gap-2 mt-2">
-      <button id="eventsPrev" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Evento anterior">‹</button>
-      <button id="eventsNext" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Próximo evento">›</button>
-    </div>
-  </div>
-</section>
-
-    <!-- Formas de pagamento (agora: WEBP + fallback PNG colorido) -->
     <section id="pagamento" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Formas de pagamento</h2>
         <div class="text-xs sm:text-sm text-white/60">Escolha ao finalizar o pedido</div>
       </div>
-
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-        <!-- PayPal -->
         <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
-          <picture>
-            <source srcset="./images/payments/paypal.webp" type="image/webp">
-            <img src="./images/payments/paypal.png" alt="PayPal" class="h-10 w-auto" loading="lazy"
-                 onerror="this.classList.add('hidden'); this.closest('div').querySelector('span').classList.remove('hidden');">
-          </picture>
-          <span class="hidden text-sm font-medium">PayPal</span>
+          <picture><source srcset="./images/payments/paypal.webp" type="image/webp"><img src="./images/payments/paypal.png" alt="PayPal" class="h-10 w-auto" loading="lazy"></picture>
         </div>
-
-        <!-- Transferência bancária -->
         <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
-          <picture>
-            <source srcset="./images/payments/bank-transfer.webp" type="image/webp">
-            <img src="./images/payments/bank-transfer.png" alt="Transferência bancária" class="h-10 w-auto" loading="lazy"
-                 onerror="this.classList.add('hidden'); this.closest('div').querySelector('span').classList.remove('hidden');">
-          </picture>
-          <span class="hidden text-sm font-medium">Transferência bancária</span>
+          <picture><source srcset="./images/payments/bank-transfer.webp" type="image/webp"><img src="./images/payments/bank-transfer.png" alt="Transferência bancária" class="h-10 w-auto" loading="lazy"></picture>
         </div>
-
-        <!-- MB Way -->
         <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
-          <picture>
-            <source srcset="./images/payments/mbway.webp" type="image/webp">
-            <img src="./images/payments/mbway.png" alt="MB Way" class="h-10 w-auto" loading="lazy"
-                 onerror="this.classList.add('hidden'); this.closest('div').querySelector('span').classList.remove('hidden');">
-          </picture>
-          <span class="hidden text-sm font-medium">MB Way</span>
+          <picture><source srcset="./images/payments/mbway.webp" type="image/webp"><img src="./images/payments/mbway.png" alt="MB Way" class="h-10 w-auto" loading="lazy"></picture>
         </div>
-
-        <!-- Vinted -->
         <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
-          <picture>
-            <source srcset="./images/payments/vinted.webp" type="image/webp">
-            <img src="./images/payments/vinted.png" alt="Vinted" class="h-10 w-auto" loading="lazy"
-                 onerror="this.classList.add('hidden'); this.closest('div').querySelector('span').classList.remove('hidden');">
-          </picture>
-          <span class="hidden text-sm font-medium">Vinted</span>
+          <picture><source srcset="./images/payments/vinted.webp" type="image/webp"><img src="./images/payments/vinted.png" alt="Vinted" class="h-10 w-auto" loading="lazy"></picture>
         </div>
-
-        <!-- Wallapop -->
         <div class="bg-white/5 border border-white/10 rounded-2xl p-5 grid place-items-center">
-          <picture>
-            <source srcset="./images/payments/wallapop.webp" type="image/webp">
-            <img src="./images/payments/wallapop.png" alt="Wallapop" class="h-10 w-auto" loading="lazy"
-                 onerror="this.classList.add('hidden'); this.closest('div').querySelector('span').classList.remove('hidden');">
-          </picture>
-          <span class="hidden text-sm font-medium">Wallapop</span>
+          <picture><source srcset="./images/payments/wallapop.webp" type="image/webp"><img src="./images/payments/wallapop.png" alt="Wallapop" class="h-10 w-auto" loading="lazy"></picture>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
     <section id="faq" class="max-w-7xl mx-auto px-4 pt-2 pb-12 scroll-mt-24">
-      <div class="mb-4 flex items-center justify-between">
-        <h2 class="text-xl sm:text-2xl font-bold">Dúvidas frequentes</h2>
-      </div>
+      <div class="mb-4 flex items-center justify-between"><h2 class="text-xl sm:text-2xl font-bold">Dúvidas frequentes</h2></div>
       <div class="space-y-3">
-        <details class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <summary class="cursor-pointer font-medium">Quais são as opções de envio?</summary>
-          <p class="text-white/80 mt-2 text-sm">Vinted/Wallapop (valor a calcular) e Correios (Nacional/Internacional) com valores fixos exibidos no carrinho.</p>
-        </details>
-        <details class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <summary class="cursor-pointer font-medium">Como faço o pagamento?</summary>
-          <p class="text-white/80 mt-2 text-sm">Finalizamos pelo WhatsApp; combinamos o método de pagamento e confirmamos o envio.</p>
-        </details>
-        <details class="bg-white/5 border border-white/10 rounded-xl p-4">
-          <summary class="cursor-pointer font-medium">Posso comprar tamanhos diferentes do mesmo modelo?</summary>
-          <p class="text-white/80 mt-2 text-sm">Sim. Cada código identifica modelo/cor/tamanho. Adicione as variações desejadas ao carrinho.</p>
-        </details>
+        <details class="bg-white/5 border border-white/10 rounded-xl p-4"><summary class="cursor-pointer font-medium">Quais são as opções de envio?</summary><p class="text-white/80 mt-2 text-sm">Vinted/Wallapop (a calcular) e Correios (Nacional/Internacional) com valores fixos no carrinho.</p></details>
+        <details class="bg-white/5 border border-white/10 rounded-xl p-4"><summary class="cursor-pointer font-medium">Como faço o pagamento?</summary><p class="text-white/80 mt-2 text-sm">Finalizamos pelo WhatsApp; combinamos o método e confirmamos o envio.</p></details>
+        <details class="bg-white/5 border border-white/10 rounded-xl p-4"><summary class="cursor-pointer font-medium">Posso comprar tamanhos diferentes do mesmo modelo?</summary><p class="text-white/80 mt-2 text-sm">Sim, cada código identifica modelo/cor/tamanho. Adicione as variações ao carrinho.</p></details>
       </div>
     </section>
 
-    <!-- Sobre -->
     <section id="sobre" class="max-w-7xl mx-auto px-4 pt-2 pb-12 scroll-mt-24">
-      <div class="mb-4 flex items-center justify-between">
-        <h2 class="text-xl sm:text-2xl font-bold">Sobre a OLAVO SCALE WHEELS</h2>
-      </div>
-      <p class="text-white/80 text-sm leading-relaxed">
-        Produzimos rodas em miniatura com alto padrão de acabamento. Catálogo pensado para compras rápidas via WhatsApp, com envios para Portugal e internacional.
-      </p>
+      <div class="mb-4 flex items-center justify-between"><h2 class="text-xl sm:text-2xl font-bold">Sobre a OLAVO SCALE WHEELS</h2></div>
+      <p class="text-white/80 text-sm leading-relaxed">Rodas em miniatura com alto padrão de acabamento. Compras rápidas via WhatsApp, envios para Portugal e internacional.</p>
     </section>
   </main>
 
-  <!-- Drawer do carrinho -->
   <aside id="cartDrawer" class="fixed inset-y-0 right-0 w-[92%] sm:w-[420px] bg-neutral-900 border-l border-white/10 shadow-2xl translate-x-full transition-transform duration-300 z-50 flex flex-col">
     <div class="p-4 border-b border-white/10 flex items-center justify-between">
       <h3 class="text-lg font-semibold">Seu carrinho</h3>
@@ -384,69 +274,33 @@
     </div>
     <div id="cartItems" class="flex-1 overflow-y-auto divide-y divide-white/5"></div>
     <div class="p-4 border-t border-white/10 space-y-4">
-      <div class="flex items-center justify-between text-sm text-white/70">
-        <span>Total de itens</span>
-        <span id="cartTotalItems" class="font-semibold text-white">0</span>
-      </div>
-
-      <!-- Subtotal e envio -->
+      <div class="flex items-center justify-between text-sm text-white/70"><span>Total de itens</span><span id="cartTotalItems" class="font-semibold text-white">0</span></div>
       <div class="space-y-2 text-sm">
-        <div class="flex items-center justify-between">
-          <span class="text-white/70">Subtotal</span>
-          <span id="cartSubtotal" class="font-semibold text-white">—</span>
-        </div>
-
+        <div class="flex items-center justify-between"><span class="text-white/70">Subtotal</span><span id="cartSubtotal" class="font-semibold text-white">—</span></div>
         <fieldset class="mt-3 border border-white/10 rounded-xl p-3 space-y-2">
           <legend class="px-2 text-xs text-white/60">Opções de envio</legend>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipVinted" value="vinted" class="accent-yellow-400">
-            <span class="text-sm">Vinted <span class="text-white/50">(valor calculado depois)</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipWallapop" value="wallapop" class="accent-yellow-400">
-            <span class="text-sm">Wallapop <span class="text-white/50">(valor calculado depois)</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipCorreioAzul" value="correio_azul" class="accent-yellow-400">
-            <span class="text-sm">Correio Azul (Portugal) – <span class="font-medium text-white">2,50&nbsp;€</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipCorreioRegistrado" value="correio_registrado" class="accent-yellow-400">
-            <span class="text-sm">Correio Registrado (Nacional) – <span class="font-medium text-white">4,50&nbsp;€</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipCorreioInternacional" value="correio_internacional" class="accent-yellow-400">
-            <span class="text-sm">Correio Internacional – <span class="font-medium text-white">7,50&nbsp;€</span></span>
-          </label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ship" id="shipVinted" value="vinted" class="accent-yellow-400"><span class="text-sm">Vinted <span class="text-white/50">(a calcular)</span></span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ship" id="shipWallapop" value="wallapop" class="accent-yellow-400"><span class="text-sm">Wallapop <span class="text-white/50">(a calcular)</span></span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ship" id="shipCorreioAzul" value="correio_azul" class="accent-yellow-400"><span class="text-sm">Correio Azul (Portugal) – <span class="font-medium text-white">2,50 €</span></span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ship" id="shipCorreioRegistrado" value="correio_registrado" class="accent-yellow-400"><span class="text-sm">Correio Registrado (Nacional) – <span class="font-medium text-white">4,50 €</span></span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ship" id="shipCorreioInternacional" value="correio_internacional" class="accent-yellow-400"><span class="text-sm">Correio Internacional – <span class="font-medium text-white">7,50 €</span></span></label>
         </fieldset>
-
-        <div class="flex items-center justify-between">
-          <span class="text-white/70">Envio</span>
-          <span id="shippingValue" class="font-semibold text-white">—</span>
-        </div>
-
-        <div class="flex items-center justify-between border-t border-white/10 pt-2 text-base">
-          <span class="text-white/80">Total + envio</span>
-          <span id="cartGrandTotal" class="font-bold text-white">—</span>
-        </div>
+        <div class="flex items-center justify-between"><span class="text-white/70">Envio</span><span id="shippingValue" class="font-semibold text-white">—</span></div>
+        <div class="flex items-center justify-between border-t border-white/10 pt-2 text-base"><span class="text-white/80">Total + envio</span><span id="cartGrandTotal" class="font-bold text-white">—</span></div>
       </div>
-
       <label class="block text-sm text-white/80">Nome do cliente (opcional)
         <input id="customerName" type="text" class="mt-1 w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none focus:border-yellow-400/60" placeholder="Seu nome" />
       </label>
-      <button id="whatsCheckout" class="w-full bg-yellow-400 text-black font-semibold px-4 py-3 rounded-xl hover:brightness-95 active:brightness-90 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-        Enviar pedido via WhatsApp
-      </button>
+      <button id="whatsCheckout" class="w-full bg-yellow-400 text-black font-semibold px-4 py-3 rounded-xl hover:brightness-95 active:brightness-90 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>Enviar pedido via WhatsApp</button>
       <p class="text-[11px] text-white/50">Abriremos seu WhatsApp com a mensagem do pedido já preenchida.</p>
     </div>
   </aside>
   <div id="backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40"></div>
 
-  <!-- Contato -->
   <section id="contato" class="max-w-7xl mx-auto px-4 pb-10 scroll-mt-24">
     <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
       <h2 class="text-xl sm:text-2xl font-bold mb-2">Fale conosco</h2>
-      <p class="text-white/80 text-sm mb-4">Tem alguma dúvida ou quer um orçamento rápido? Chame a gente no WhatsApp.</p>
+      <p class="text-white/80 text-sm mb-4">Tem dúvidas ou quer um orçamento rápido? Chame no WhatsApp.</p>
       <div class="flex flex-wrap items-center gap-3">
         <button id="contactWhats" class="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-xl hover:brightness-95">Abrir WhatsApp</button>
         <span class="text-white/60 text-sm">Ou finalize um pedido pelo carrinho.</span>
