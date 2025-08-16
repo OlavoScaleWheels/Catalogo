@@ -1,12 +1,29 @@
+/* ====================== BASE / GERAIS ====================== */
 html { scroll-behavior: smooth; }
-/* Scrollbars */
+
+/* Scrollbar minimal */
 ::-webkit-scrollbar { height: 8px; width: 8px; }
 ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
 
-/* Selects pretos, texto amarelo (pedido anterior) */
-select { background-color: #000 !important; color: #ff0 !important; font-weight: 700 !important; }
-select option { background-color: #000; color: #ff0; font-weight: 700; }
+/* ====================== SELECTs (pedido) ====================== */
+select {
+  background-color: black !important;
+  color: yellow !important;
+  font-weight: bold !important;
+}
+select option {
+  background-color: black;
+  color: yellow;
+  font-weight: bold;
+}
 
-/* Cartões do carrossel de clientes */
-.client-card{ min-width:260px; max-width:260px; }
-.client-flag{ height:16px; width:auto; display:inline-block; vertical-align:middle; border-radius:3px; border:1px solid rgba(255,255,255,.15); margin-right:.35rem; }
+/* ====================== CARDS / IMAGENS ====================== */
+img { display: block; }
+
+/* Garante que imagens de cards respeitem o container */
+.object-cover-center {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}

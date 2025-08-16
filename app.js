@@ -8,6 +8,18 @@ const COST_AZUL = 2.50;
 const COST_REGISTRADO = 4.50;
 const COST_INTERNACIONAL = 7.50;
 
+/* ======= (NOVO) VÍDEO DE MONTAGEM ======= */
+// Usamos o domínio de privacidade do YouTube
+const ASSEMBLY_VIDEO_URL = "https://www.youtube-nocookie.com/embed/CcKVOC8uVE8?rel=0&modestbranding=1";
+
+/** Inicializa o iframe do vídeo, caso a seção exista no HTML */
+function setupAssemblyVideo() {
+  const frame = document.getElementById("assemblyVideoFrame");
+  if (frame && !frame.src) {
+    frame.src = ASSEMBLY_VIDEO_URL;
+  }
+}
+
 /* ======= AUTOPREENCHIMENTO A PARTIR DO ID (MMM.CCC.TT) ======= */
 const COLOR_MAP = { "001": "Cromado", "002": "Dourado", "003": "Preto", "020": "Azul" };
 const MODEL_MAP = { "001": "Roda 001", "011": "Roda 011", "012": "Roda 012", "031": "Roda 031", "050": "Roda 050", "060": "Roda 060" };
@@ -698,6 +710,9 @@ function init() {
 
   // Carrossel de clientes
   renderClientsCarousel();
+
+  // >>> NOVO: inicializa vídeo de montagem (seção que você vai adicionar no HTML)
+  setupAssemblyVideo();
 }
 
 document.addEventListener('DOMContentLoaded', init);
