@@ -445,14 +445,14 @@ function buildWhatsAppMessage() {
   return encodeURIComponent([header, who, '\nItens:', ...lines, totalItemsLine, subtotalLine, shippingLine, grandLine, '\nObrigado!'].filter(Boolean).join('\n'));
 }
 function sendToWhatsApp() {
-  if (!WHATSAPP_NUMBER || /\D/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
+  if (!/^\d+$/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
   const text = buildWhatsAppMessage();
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
 }
 
 // Contato direto
 function openWhatsDirect() {
-  if (!WHATSAPP_NUMBER || /\D/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
+  if (!/^\d+$/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
   const text = encodeURIComponent('Olá! Gostaria de tirar uma dúvida.');
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
 }
@@ -467,7 +467,7 @@ function buildFeedbackMessage() {
   return encodeURIComponent([header, who, '\nMensagem:', msg].filter(Boolean).join('\n'));
 }
 function sendFeedbackToWhatsApp() {
-  if (!WHATSAPP_NUMBER || /\D/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
+  if (!/^\d+$/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
   const text = buildFeedbackMessage();
   if (!text) return;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
@@ -475,17 +475,12 @@ function sendFeedbackToWhatsApp() {
 
 /* =========================================================
    Carrossel "Trabalhos dos clientes"
-   Requisitos:
    - Coloque um arquivo JSON em: /images/clientes/manifest.json
-     Ex.: ["Fulano de tal - 005.001.11 - Portugal.jpg",
-           "Ciclado de la - 025.001.11 - Espanha.jpg",
-           "teste - 100.001.11 - Brasil.jpg",
-           "adriano almeida - 200.002.11.jpg"]
+     Ex.: ["Fulano de tal - 005.001.11 - Portugal.jpg", ...]
    - As imagens ficam em /images/clientes/<arquivo>
-   - Bandeiras também ficam em /images/clientes/, nomeadas pelo país:
-       Portugal.webp/png/jpg, Espanha.webp/png/jpg, Brasil.webp/png/jpg, etc.
+   - Bandeiras em /images/clientes/, nomeadas pelo país:
+       Portugal.webp/png/jpg, Espanha.webp/png/jpg, Brasil.webp/png/jpg...
    ========================================================= */
-
 const CLIENTS_DIR = './images/clientes';
 const CLIENTS_MAX = 12;
 const CLIENTS_ALLOWED_EXTS = ['webp','png','jpg','jpeg'];
@@ -509,6 +504,7 @@ async function loadClientsManifest(){
 
 // tenta definir a bandeira (tenta .webp, .png, .jpg… em algumas variações)
 function setFlagImage(imgEl, countryRaw){
+  if(!imgEl) return;
   if(!countryRaw){ imgEl.remove(); return; }
   const variants = [
     countryRaw, countryRaw.toLowerCase(), slugify(countryRaw),
@@ -619,21 +615,19 @@ async function renderClientsCarousel(){
   // Navegação
   const prev = document.getElementById('clientsPrev');
   const next = document.getElementById('clientsNext');
-  const scrollByCards = (dir=1) => {
+  const scrollByCardsLocal = (dir=1) => {
     const cardWidth = 220 + 16;
     track.scrollBy({ left: dir * cardWidth * 2, behavior: 'smooth' });
   };
-  prev && prev.addEventListener('click', () => scrollByCards(-1));
-  next && next.addEventListener('click', () => scrollByCards(1));
+  prev && prev.addEventListener('click', () => scrollByCardsLocal(-1));
+  next && next.addEventListener('click', () => scrollByCardsLocal(1));
 
   // auto-scroll leve
-  let auto; const start=()=> auto=setInterval(()=>scrollByCards(1), 3500);
+  let auto; const start=()=> auto=setInterval(()=>scrollByCardsLocal(1), 3500);
   const stop=()=> clearInterval(auto);
   start(); track.addEventListener('mouseenter', stop); track.addEventListener('mouseleave', start);
 }
 
-// chame isso no seu init() já existente
-// renderClientsCarousel();
 /* ======= Decodificador de código ======= */
 function decodeArticle(code) {
   const out = byId("decodeOut");
