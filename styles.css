@@ -1,0 +1,12 @@
+html { scroll-behavior: smooth; }
+/* Scrollbars */
+::-webkit-scrollbar { height: 8px; width: 8px; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
+
+/* Selects pretos, texto amarelo (pedido anterior) */
+select { background-color: #000 !important; color: #ff0 !important; font-weight: 700 !important; }
+select option { background-color: #000; color: #ff0; font-weight: 700; }
+
+/* Cartões do carrossel de clientes */
+.client-card{ min-width:260px; max-width:260px; }
+.client-flag{ height:16px; width:auto; display:inline-block; vertical-align:middle; border-radius:3px; border:1px solid rgba(255,255,255,.15); margin-right:.35rem; }
