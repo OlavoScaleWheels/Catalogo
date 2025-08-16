@@ -194,75 +194,8 @@
         pensado para compras rápidas via WhatsApp, com envio para Portugal continental e ilhas, além de envios internacionais.
       </p>
     </section>
-  </main>
 
-  <!-- Drawer do carrinho -->
-  <aside id="cartDrawer" class="fixed inset-y-0 right-0 w-[92%] sm:w-[420px] bg-neutral-900 border-l border-white/10 shadow-2xl translate-x-full transition-transform duration-300 z-50 flex flex-col">
-    <div class="p-4 border-b border-white/10 flex items-center justify-between">
-      <h3 class="text-lg font-semibold">Seu carrinho</h3>
-      <button id="closeCart" class="size-8 grid place-items-center rounded-full hover:bg-white/10">✕</button>
-    </div>
-    <div id="cartItems" class="flex-1 overflow-y-auto divide-y divide-white/5"></div>
-    <div class="p-4 border-t border-white/10 space-y-4">
-      <div class="flex items-center justify-between text-sm text-white/70">
-        <span>Total de itens</span>
-        <span id="cartTotalItems" class="font-semibold text-white">0</span>
-      </div>
-
-      <!-- Subtotal e envio -->
-      <div class="space-y-2 text-sm">
-        <div class="flex items-center justify-between">
-          <span class="text-white/70">Subtotal</span>
-          <span id="cartSubtotal" class="font-semibold text-white">—</span>
-        </div>
-
-        <fieldset class="mt-3 border border-white/10 rounded-xl p-3 space-y-2">
-          <legend class="px-2 text-xs text-white/60">Opções de envio</legend>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipVinted" value="vinted" class="accent-yellow-400">
-            <span class="text-sm">Vinted <span class="text-white/50">(valor calculado depois)</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipWallapop" value="wallapop" class="accent-yellow-400">
-            <span class="text-sm">Wallapop <span class="text-white/50">(valor calculado depois)</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipCorreioAzul" value="correio_azul" class="accent-yellow-400">
-            <span class="text-sm">Correio Azul (Portugal) – <span class="font-medium text-white">2,50&nbsp;€</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipCorreioRegistrado" value="correio_registrado" class="accent-yellow-400">
-            <span class="text-sm">Correio Registrado (Nacional) – <span class="font-medium text-white">4,50&nbsp;€</span></span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="ship" id="shipCorreioInternacional" value="correio_internacional" class="accent-yellow-400">
-            <span class="text-sm">Correio Internacional – <span class="font-medium text-white">7,50&nbsp;€</span></span>
-          </label>
-        </fieldset>
-
-        <div class="flex items-center justify-between">
-          <span class="text-white/70">Envio</span>
-          <span id="shippingValue" class="font-semibold text-white">—</span>
-        </div>
-
-        <div class="flex items-center justify-between border-t border-white/10 pt-2 text-base">
-          <span class="text-white/80">Total + envio</span>
-          <span id="cartGrandTotal" class="font-bold text-white">—</span>
-        </div>
-      </div>
-
-      <label class="block text-sm text-white/80">Nome do cliente (opcional)
-        <input id="customerName" type="text" class="mt-1 w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none focus:border-yellow-400/60" placeholder="Seu nome" />
-      </label>
-      <button id="whatsCheckout" class="w-full bg-yellow-400 text-black font-semibold px-4 py-3 rounded-xl hover:brightness-95 active:brightness-90 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-        Enviar pedido via WhatsApp
-      </button>
-      <p class="text-[11px] text-white/50">Abriremos seu WhatsApp com a mensagem do pedido já preenchida.</p>
-    </div>
-  </aside>
-  <div id="backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40"></div>
-
-          <!-- Depoimentos -->
+    <!-- Depoimentos -->
     <section id="depoimentos" class="max-w-7xl mx-auto px-4 pt-2 pb-6 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">O que dizem os clientes</h2>
@@ -354,6 +287,23 @@
       </div>
     </section>
 
+    <!-- ===== NOVO: Carrossel de trabalhos dos clientes ===== -->
+    <section id="trabalhos-clientes" class="max-w-7xl mx-auto px-4 pt-2 pb-6 scroll-mt-24">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-bold">Trabalhos dos clientes</h2>
+        <div class="text-xs sm:text-sm text-white/60">12 fotos aleatórias a cada recarregamento</div>
+      </div>
+
+      <div class="relative">
+        <div id="clientsCarouselTrack" class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"></div>
+        <div class="flex items-center justify-end gap-2 mt-2">
+          <button id="clientsPrev" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10">‹</button>
+          <button id="clientsNext" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10">›</button>
+        </div>
+      </div>
+      <p class="mt-2 text-xs text-white/50">Formato esperado do arquivo: <code>Nome do cliente - MMM.CCC.TT - País.jpg</code></p>
+    </section>
+
     <!-- Feedback (vai antes das Formas de pagamento) -->
     <section id="feedback" class="max-w-7xl mx-auto px-4 pt-2 pb-6 scroll-mt-24">
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -382,8 +332,8 @@
       </div>
     </section>
 
-      <!-- Formas de pagamento -->
-     <section id="pagamento" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
+    <!-- Formas de pagamento -->
+    <section id="pagamento" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Formas de pagamento</h2>
         <div class="text-xs sm:text-sm text-white/60">Escolha ao finalizar o pedido</div>
@@ -446,7 +396,73 @@
         </div>
       </div>
     </section>
+  </main>
 
+  <!-- Drawer do carrinho -->
+  <aside id="cartDrawer" class="fixed inset-y-0 right-0 w-[92%] sm:w-[420px] bg-neutral-900 border-l border-white/10 shadow-2xl translate-x-full transition-transform duration-300 z-50 flex flex-col">
+    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+      <h3 class="text-lg font-semibold">Seu carrinho</h3>
+      <button id="closeCart" class="size-8 grid place-items-center rounded-full hover:bg-white/10">✕</button>
+    </div>
+    <div id="cartItems" class="flex-1 overflow-y-auto divide-y divide-white/5"></div>
+    <div class="p-4 border-t border-white/10 space-y-4">
+      <div class="flex items-center justify-between text-sm text-white/70">
+        <span>Total de itens</span>
+        <span id="cartTotalItems" class="font-semibold text-white">0</span>
+      </div>
+
+      <!-- Subtotal e envio -->
+      <div class="space-y-2 text-sm">
+        <div class="flex items-center justify-between">
+          <span class="text-white/70">Subtotal</span>
+          <span id="cartSubtotal" class="font-semibold text-white">—</span>
+        </div>
+
+        <fieldset class="mt-3 border border-white/10 rounded-xl p-3 space-y-2">
+          <legend class="px-2 text-xs text-white/60">Opções de envio</legend>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="ship" id="shipVinted" value="vinted" class="accent-yellow-400">
+            <span class="text-sm">Vinted <span class="text-white/50">(valor calculado depois)</span></span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="ship" id="shipWallapop" value="wallapop" class="accent-yellow-400">
+            <span class="text-sm">Wallapop <span class="text-white/50">(valor calculado depois)</span></span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="ship" id="shipCorreioAzul" value="correio_azul" class="accent-yellow-400">
+            <span class="text-sm">Correio Azul (Portugal) – <span class="font-medium text-white">2,50&nbsp;€</span></span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="ship" id="shipCorreioRegistrado" value="correio_registrado" class="accent-yellow-400">
+            <span class="text-sm">Correio Registrado (Nacional) – <span class="font-medium text-white">4,50&nbsp;€</span></span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="ship" id="shipCorreioInternacional" value="correio_internacional" class="accent-yellow-400">
+            <span class="text-sm">Correio Internacional – <span class="font-medium text-white">7,50&nbsp;€</span></span>
+          </label>
+        </fieldset>
+
+        <div class="flex items-center justify-between">
+          <span class="text-white/70">Envio</span>
+          <span id="shippingValue" class="font-semibold text-white">—</span>
+        </div>
+
+        <div class="flex items-center justify-between border-t border-white/10 pt-2 text-base">
+          <span class="text-white/80">Total + envio</span>
+          <span id="cartGrandTotal" class="font-bold text-white">—</span>
+        </div>
+      </div>
+
+      <label class="block text-sm text-white/80">Nome do cliente (opcional)
+        <input id="customerName" type="text" class="mt-1 w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none focus:border-yellow-400/60" placeholder="Seu nome" />
+      </label>
+      <button id="whatsCheckout" class="w-full bg-yellow-400 text-black font-semibold px-4 py-3 rounded-xl hover:brightness-95 active:brightness-90 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+        Enviar pedido via WhatsApp
+      </button>
+      <p class="text-[11px] text-white/50">Abriremos seu WhatsApp com a mensagem do pedido já preenchida.</p>
+    </div>
+  </aside>
+  <div id="backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40"></div>
 
   <!-- Contato -->
   <section id="contato" class="max-w-7xl mx-auto px-4 pb-10 scroll-mt-24">
@@ -519,17 +535,16 @@
 
     // >>> Só manter esta lista simples. O resto se completa.
     const PRODUCTS_RAW = [
-      { id: "031.001.11|19.90", estoque: 8 },
-      { id: "031.002.11|19,90", estoque: 6 },
-      { id: "031.003.10|17.50", estoque: 3 },
-      { id: "031.020.12,5|21.00", estoque: 5 },
+      { id: "001.001.11|3.50", estoque: 2 },
+      { id: "002.001.11|3.50", estoque: 6 },
+      { id: "003.001.11|3.50", estoque: 3 },
+      { id: "004.001.11|3.50", estoque: 5 },
       { id: "001.001.17", estoque: 12 },
       { id: "001.003.18", estoque: 0 },
       { id: "011.011.17", estoque: 7 },
       { id: "012.012.18", estoque: 2 },
       { id: "050.001.19", estoque: 10 },
       { id: "060.001.20", estoque: 9 },
-      { id: "001.001.11", estoque: 2 },
 
       /* +20 artigos para testar a paginação */
       { id: "031.001.10|18.90", estoque: 4 },
@@ -589,7 +604,8 @@
           <div class="absolute bottom-2 right-2 bg-yellow-400 text-black text-[11px] font-semibold px-2 py-1 rounded-md shadow">
             ${formatEUR(p.preco)}
           </div>` : ``}
-        `; return slide;
+        `;
+      return slide;
     }
     function renderCarousel(){ const top = TOP10_IDS.map(id=>PRODUCTS.find(p=>p.id===id)).filter(Boolean); track.innerHTML = ""; top.forEach(p=> track.appendChild(createSlide(p)) ); }
 
@@ -771,7 +787,8 @@
                 ${Array.from({length:max},(_,i)=>`<option value='${i+1}' ${i+1===item.qty?'selected':''}>${i+1}</option>`).join('')}
               </select>
             </div>
-          </div>`; list.appendChild(row);
+          </div>`;
+        list.appendChild(row);
       });
       list.querySelectorAll('button.remove').forEach(btn=> btn.addEventListener('click', ()=> removeFromCart(btn.getAttribute('data-id')) ));
       list.querySelectorAll('select.cartQty').forEach(sel=> sel.addEventListener('change', ()=>{ const id = sel.getAttribute('data-id'); const qty = parseInt(sel.value,10); const item = state.cart.find(it=>it.id===id); if(item){ item.qty = qty; saveCart(); } }));
@@ -860,7 +877,7 @@
       const text = encodeURIComponent('Olá! Gostaria de tirar uma dúvida.');
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
     }
-        // ======= Feedback via WhatsApp =======
+    // ======= Feedback via WhatsApp =======
     function buildFeedbackMessage(){
       const name = (byId('feedbackName')?.value || '').trim();
       const msg  = (byId('feedbackMessage')?.value || '').trim();
@@ -879,6 +896,143 @@
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
     }
 
+    /* =========================
+       NOVO: Carrossel clientes
+       ========================= */
+    const CLIENTS_FOLDER = 'images/clientes';
+    const CLIENTS_MAX = 12;
+    const ALLOWED_EXTS = ['jpg','jpeg','png','webp'];
+
+    // Fallback (remove depois de subir seu manifest e imagens)
+    const CLIENTS_FALLBACK = [
+      "Francisco Oliveira - 001.003.11 - Portugal.jpg",
+      "Maria Silva - 031.001.12,5 - Brasil.jpg",
+      "John Smith - 011.003.18 - UK.jpg",
+      "Carlos García - 050.001.19 - España.jpg",
+      "Ana Ferreira - 012.012.18 - Portugal.jpg",
+      "Luís Mendes - 001.001.17 - Portugal.jpg",
+      "Paulo Santos - 031.003.10 - Portugal.jpg",
+      "Miguel Costa - 060.001.20 - Portugal.jpg",
+      "Laura Rossi - 001.020.17 - Italia.jpg",
+      "Ivan Petrov - 050.003.19 - Rússia.jpg",
+      "Emma Müller - 031.001.11 - Deutschland.jpg",
+      "Sofia Almeida - 012.001.17 - Portugal.jpg",
+      "Pedro Lopes - 001.003.12,5 - Portugal.jpg",
+      "Ricardo Dias - 060.003.20 - Portugal.jpg"
+    ];
+
+    async function loadClientsManifest(){
+      // Tenta clientes/manifest.json (array de strings ou objetos {file})
+      try{
+        const res = await fetch(`${CLIENTS_FOLDER}/manifest.json`, { cache: 'no-store' });
+        if(res.ok){
+          const data = await res.json();
+          if(Array.isArray(data)){
+            return data.map(x => typeof x === 'string' ? x : x.file).filter(Boolean);
+          }
+        }
+      }catch(e){}
+      // Tenta clientes/_list.txt (um arquivo por linha)
+      try{
+        const res = await fetch(`${CLIENTS_FOLDER}/_list.txt`, { cache: 'no-store' });
+        if(res.ok){
+          const text = await res.text();
+          return text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+        }
+      }catch(e){}
+      // Fallback se nada existir (não quebra a página)
+      return CLIENTS_FALLBACK;
+    }
+
+    function shuffle(arr){
+      for(let i=arr.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [arr[i],arr[j]] = [arr[j],arr[i]];
+      }
+      return arr;
+    }
+
+    function stripExt(name){
+      const i = name.lastIndexOf('.');
+      if(i<0) return name;
+      const ext = name.slice(i+1).toLowerCase();
+      return ALLOWED_EXTS.includes(ext) ? name.slice(0,i) : name;
+    }
+
+    function parseClientMeta(fileName){
+      const base = stripExt(fileName);
+      // Formato: "Nome - MMM.CCC.TT - País"
+      const parts = base.split(' - ').map(s=>s.trim());
+      let nome = '', codigo = '', pais = '';
+      if(parts.length >= 3){
+        nome = parts[0];
+        codigo = parts[1];
+        pais = parts.slice(2).join(' - '); // caso país tenha "Estados Unidos", etc.
+      }else{
+        // Se não seguir o padrão, mostra tudo no nome
+        nome = base;
+      }
+      return { nome, codigo, pais, file: fileName, src: `${CLIENTS_FOLDER}/${encodeURIComponent(fileName)}` };
+    }
+
+    function createClientSlide(meta){
+      const card = document.createElement('article');
+      card.className = "relative min-w-[260px] max-w-[260px] snap-start bg-white/5 border border-white/10 rounded-2xl overflow-hidden";
+      card.innerHTML = `
+        <div class="aspect-[4/3] overflow-hidden bg-black/20 relative">
+          <img class="w-full h-full object-cover transition-transform hover:scale-105" loading="lazy" alt="${meta.nome ? meta.nome : 'Cliente'}">
+          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-3">
+            <div class="text-[13px] font-semibold leading-tight truncate" title="${meta.nome}">${meta.nome || 'Cliente'}</div>
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] text-white/80 truncate" title="${meta.pais || ''}">${meta.pais || ''}</span>
+              <span class="text-[11px] bg-yellow-400 text-black font-semibold px-1.5 py-0.5 rounded">${meta.codigo || ''}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      const img = card.querySelector('img');
+      const fallback = () => {
+        img.remove();
+        const ph = document.createElement('div');
+        ph.className = "w-full h-full grid place-items-center text-center p-4";
+        ph.innerHTML = `
+          <div>
+            <div class="text-sm font-semibold">${meta.nome || 'Cliente'}</div>
+            <div class="text-xs text-white/70">${meta.pais || ''}</div>
+            <div class="mt-1 inline-block text-[11px] bg-yellow-400 text-black font-semibold px-1.5 py-0.5 rounded">${meta.codigo || ''}</div>
+          </div>`;
+        card.querySelector('.relative').prepend(ph);
+      };
+      img.addEventListener('error', fallback, { once: true });
+      img.src = meta.src;
+      return card;
+    }
+
+    async function initClientsCarousel(){
+      const files = await loadClientsManifest();
+      // filtra extensões válidas e remove duplicados
+      const clean = Array.from(new Set(files))
+        .filter(f => ALLOWED_EXTS.includes((f.split('.').pop()||'').toLowerCase()));
+      const chosen = shuffle(clean).slice(0, CLIENTS_MAX).map(parseClientMeta);
+
+      const track = byId('clientsCarouselTrack');
+      track.innerHTML = '';
+      chosen.forEach(meta => track.appendChild(createClientSlide(meta)));
+
+      // Scroll controls
+      const cardWidth = 260 + 16; // width + gap
+      const scrollByCards = (dir=1)=> track.scrollBy({ left: dir*cardWidth*2, behavior: 'smooth' });
+      byId('clientsNext')?.addEventListener('click', ()=>scrollByCards(1));
+      byId('clientsPrev')?.addEventListener('click', ()=>scrollByCards(-1));
+
+      // Auto-rotate
+      let auto;
+      const start = ()=> auto = setInterval(()=>scrollByCards(1), 3500);
+      const stop  = ()=> clearInterval(auto);
+      track.addEventListener('mouseenter', stop);
+      track.addEventListener('mouseleave', start);
+      start();
+    }
 
     // ======= UI =======
     const drawer = byId('cartDrawer'); const backdrop = byId('backdrop');
@@ -907,14 +1061,17 @@
       byId('searchInput').addEventListener('input', handleSearch);
       const decodeInput = byId("decodeInput"); if(decodeInput){ decodeInput.addEventListener("input", (e)=> decodeArticle(e.target.value)); }
       let autoScroll; function startAuto(){ autoScroll = setInterval(()=>scrollByCards(1), 3500); } function stopAuto(){ clearInterval(autoScroll); }
-      track.addEventListener('mouseenter', stopAuto); track.addEventListener('mouseleave', startAuto); startAuto();
+      const topTrack = byId('carouselTrack');
+      topTrack.addEventListener('mouseenter', stopAuto); topTrack.addEventListener('mouseleave', startAuto); startAuto();
       const sendFdb = byId('sendFeedbackBtn');
       if(sendFdb) sendFdb.addEventListener('click', sendFeedbackToWhatsApp);
-
 
       // Shipping radios
       const radios = ['shipVinted','shipWallapop','shipCorreioAzul','shipCorreioRegistrado','shipCorreioInternacional'].map(id=>byId(id));
       radios.forEach(r => { if(r) r.addEventListener('change', (e)=>{ state.shipping.method = e.target.value; updateTotals(); }); });
+
+      // NOVO: inicia carrossel de clientes
+      initClientsCarousel();
     }
 
     document.addEventListener('DOMContentLoaded', init);
