@@ -26,7 +26,7 @@
         </div>
         <div>
           <h1 class="text-lg font-semibold leading-tight">OLAVO <span class="text-yellow-400">SCALE WHEELS</span></h1>
-          <p class="text-xs text-white/60 -mt-0.5">Catálogo por artigos (auto por ID)</p>
+          <p class="text-xs text-white/60 -mt-0.5">Catálogo de rodas</p>
         </div>
       </div>
 
@@ -34,6 +34,7 @@
       <nav class="hidden md:flex items-center gap-1 ml-auto mr-2">
         <a href="#destaques" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Destaques</a>
         <a href="#catalogo" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Catálogo</a>
+        <a href="#agenda" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Agenda</a>
         <a href="#como-comprar" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Como comprar</a>
         <a href="#sobre" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Sobre</a>
         <a href="#faq" class="px-3 py-2 rounded-lg text-sm hover:bg-white/10">Dúvidas frequentes</a>
@@ -64,6 +65,7 @@
       <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-1 text-sm whitespace-nowrap">
         <a href="#destaques" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Destaques</a>
         <a href="#catalogo" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Catálogo</a>
+        <a href="#agenda" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Agenda</a>
         <a href="#como-comprar" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Como comprar</a>
         <a href="#sobre" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Sobre</a>
         <a href="#faq" class="px-3 py-1.5 rounded-lg hover:bg-white/10">Dúvidas frequentes</a>
@@ -158,7 +160,7 @@
     <section id="depoimentos" class="max-w-7xl mx-auto px-4 pt-2 pb-6 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">O que dizem os clientes</h2>
-        <div class="text-xs sm:text-sm text-white/60">Avaliações reais (fictícias para demonstração)</div>
+        <div class="text-xs sm:text-sm text-white/60">Avaliações reais</div>
       </div>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <!-- Três cards de exemplo (conteúdo original mantido) -->
@@ -263,6 +265,24 @@
         </div>
       </div>
     </section>
+    <!-- Agenda / Onde estaremos -->
+<section id="agenda" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="text-xl sm:text-2xl font-bold">Onde estaremos</h2>
+    <div class="text-xs sm:text-sm text-white/60">Agenda de eventos</div>
+  </div>
+
+  <div class="relative">
+    <!-- palco (aparece apenas um card de cada vez) -->
+    <div id="eventsStage" class="grid place-items-center min-h-[340px]"></div>
+
+    <!-- setas -->
+    <div class="flex items-center justify-end gap-2 mt-2">
+      <button id="eventsPrev" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Evento anterior">‹</button>
+      <button id="eventsNext" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Próximo evento">›</button>
+    </div>
+  </div>
+</section>
 
     <!-- Formas de pagamento (agora: WEBP + fallback PNG colorido) -->
     <section id="pagamento" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">

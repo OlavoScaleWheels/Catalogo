@@ -646,6 +646,168 @@ function decodeArticle(code) {
   const corNome = COLOR_MAP[ccc] ? `${ccc} (${COLOR_MAP[ccc]})` : ccc;
   out.innerHTML = `Modelo <strong>${mmm}</strong> • Cor <strong>${corNome}</strong> • Tamanho <strong>${tt}</strong>`;
 }
+/* ============================ AGENDA / ONDE ESTAREMOS ============================ */
+const EVENTS_DIR = './images/eventos';
+const EVENTS_ALLOWED_EXTS = ['webp','png','jpg','jpeg'];
+
+const eventsState = {
+  list: [],
+  index: 0
+};
+
+function formatDatePT(dt){
+  try {
+    return new Intl.DateTimeFormat('pt-PT',{ day:'2-digit', month:'2-digit', year:'numeric' }).format(dt);
+  } catch {
+    return String(dt?.toISOString?.().slice(0,10) || '');
+  }
+}
+
+async function loadEventsManifest(){
+  // Aceita:
+  // - [{ "date":"YYYY-MM-DD", "title":"...", "location":"...", "image":"arquivo.webp" }, ...]
+  // - { "events": [ ... ] }
+  // - ["arquivo.webp", ...] -> vira título a partir do nome do arquivo (data vazia)
+  try{
+    const res = await fetch(`${EVENTS_DIR}/manifest.json?${Date.now()}`);
+    if(!res.ok) throw new Error('Manifest indisponível');
+    const data = await res.json();
+
+    if(Array.isArray(data)) return normalizeEventsArray(data);
+    if(Array.isArray(data?.events)) return normalizeEventsArray(data.events);
+    return normalizeEventsArray([]); // formato desconhecido
+  }catch(e){
+    console.warn('Agenda: sem manifest ou inválido.', e);
+    return [];
+  }
+}
+
+function normalizeEventsArray(arr){
+  // Converte todos em {date, title, location, image}
+  return arr.map(item=>{
+    if(typeof item === 'string'){
+      // só nome do arquivo
+      const name = item.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ').trim();
+      return { date:'', title:name || 'Evento', location:'', image:item };
+    }
+    return {
+      date: item.date || '',
+      title: item.title || 'Evento',
+      location: item.location || '',
+      image: item.image || ''
+    };
+  }).filter(ev=>{
+    // precisa ter imagem com extensão válida
+    return !!ev.image && EVENTS_ALLOWED_EXTS.includes((ev.image.split('.').pop()||'').toLowerCase());
+  });
+}
+
+function sortEventsByDate(list){
+  // itens sem data vão para o fim
+  return list.slice().sort((a,b)=>{
+    const da = a.date ? new Date(a.date) : null;
+    const db = b.date ? new Date(b.date) : null;
+    if(!da && !db) return 0;
+    if(!da) return 1;
+    if(!db) return -1;
+    return da - db;
+  });
+}
+
+function findNextIndex(list){
+  if(!list.length) return 0;
+  const now = new Date();
+  let idx = list.length - 1; // se todos já passaram, mostra o último
+  let bestDiff = Infinity;
+  for(let i=0;i<list.length;i++){
+    if(!list[i].date) continue;
+    const d = new Date(list[i].date);
+    const diff = d - now;
+    if(diff >= 0 && diff < bestDiff){
+      bestDiff = diff; idx = i;
+    }
+  }
+  return idx;
+}
+
+function prefetchImage(src){
+  const i = new Image(); i.src = src;
+}
+
+function eventCardHTML(ev){
+  const src = `${EVENTS_DIR}/${encodeURIComponent(ev.image)}`;
+  const dateStr = ev.date ? formatDatePT(new Date(ev.date)) : 'Data a confirmar';
+  const location = ev.location || '';
+
+  return `
+  <article class="group relative w-full max-w-[720px] bg-white/5 border border-white/10 rounded-2xl overflow-hidden shadow">
+    <div class="aspect-[16/9] overflow-hidden bg-black/20">
+      <img src="${src}" alt="${ev.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+    </div>
+    <div class="p-4 sm:p-5">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="min-w-0">
+          <h3 class="font-semibold leading-tight truncate" title="${ev.title}">${ev.title}</h3>
+          <div class="text-xs text-white/60 truncate">${location}</div>
+        </div>
+        <div class="bg-yellow-400 text-black text-sm font-semibold px-2.5 py-1.5 rounded-lg shadow whitespace-nowrap">
+          ${dateStr}
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function drawCurrentEvent(){
+  const stage = document.getElementById('eventsStage');
+  if(!stage) return;
+
+  if(!eventsState.list.length){
+    stage.innerHTML = `<div class="py-8 text-white/60 text-sm">Nenhum evento encontrado em <code>/images/eventos</code>.</div>`;
+    return;
+  }
+  const ev = eventsState.list[eventsState.index];
+  stage.innerHTML = eventCardHTML(ev);
+
+  // Prefetch dos vizinhos pra transição suave
+  const n = eventsState.list.length;
+  const prev = eventsState.list[(eventsState.index - 1 + n) % n];
+  const next = eventsState.list[(eventsState.index + 1) % n];
+  [prev, next].forEach(x => prefetchImage(`${EVENTS_DIR}/${x.image}`));
+}
+
+function stepEvents(dir){
+  const n = eventsState.list.length;
+  if(!n) return;
+  eventsState.index = (eventsState.index + dir + n) % n;
+  drawCurrentEvent();
+}
+
+async function renderEventsAgenda(){
+  const stage = document.getElementById('eventsStage');
+  if(!stage) return;
+
+  stage.innerHTML = `<div class="py-8 text-white/60 text-sm">Carregando agenda…</div>`;
+
+  const loaded = await loadEventsManifest();
+  if(!loaded.length){
+    stage.innerHTML = `<div class="py-8 text-white/60 text-sm">Nenhum evento cadastrado ainda.</div>`;
+    return;
+  }
+  const sorted = sortEventsByDate(loaded);
+  eventsState.list = sorted;
+  eventsState.index = findNextIndex(sorted);
+  drawCurrentEvent();
+
+  const prevBtn = document.getElementById('eventsPrev');
+  const nextBtn = document.getElementById('eventsNext');
+  prevBtn && prevBtn.addEventListener('click', ()=> stepEvents(-1));
+  nextBtn && nextBtn.addEventListener('click', ()=> stepEvents(1));
+}
+/* ============================ /AGENDA ============================ */
+
+// No seu init() existente, adicione esta chamada ao final:
+/// renderEventsAgenda();
 
 /* ======= Drawer do carrinho ======= */
 const drawer = byId('cartDrawer');
@@ -696,6 +858,7 @@ function init() {
     track.addEventListener('mouseleave', startAuto);
     startAuto();
   }
+  renderEventsAgenda();
 
   // Shipping radios
   ['shipVinted', 'shipWallapop', 'shipCorreioAzul', 'shipCorreioRegistrado', 'shipCorreioInternacional']
