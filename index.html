@@ -32,21 +32,23 @@
         <a href="#contato" class="px-3 py-2 rounded-lg text-sm bg-yellow-400 text-black font-semibold hover:brightness-95">Fale conosco</a>
       </nav>
 
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <label class="relative hidden sm:block">
-          <input id="searchInput" type="search" placeholder="Buscar código ou modelo..." class="w-64 bg-white/5 border border-white/10 rounded-xl px-3 py-2 pl-9 text-sm outline-none focus:border-yellow-400/60" />
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-white/50 absolute left-2.5 top-1/2 -translate-y-1/2">
-            <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.2 12.05l4.25 4.25a.75.75 0 1 0 1.06-1.06l-4.25-4.25A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clip-rule="evenodd"/>
-          </svg>
-        </label>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <!-- Troca de idioma (bandeiras) -->
+        <div class="hidden sm:flex items-center gap-1">
+          <button id="langPT" class="rounded-md overflow-hidden ring-1 ring-white/15 hover:ring-yellow-400/60" title="Português">
+            <img src="images/flags/pt.webp" alt="PT" class="h-5 w-7 object-cover">
+          </button>
+          <button id="langEN" class="rounded-md overflow-hidden ring-1 ring-white/15 hover:ring-yellow-400/60" title="English">
+            <img src="images/flags/en.webp" alt="EN" class="h-5 w-7 object-cover">
+          </button>
+          <button id="langES" class="rounded-md overflow-hidden ring-1 ring-white/15 hover:ring-yellow-400/60" title="Español">
+            <img src="images/flags/es.webp" alt="ES" class="h-5 w-7 object-cover">
+          </button>
+          <button id="langFR" class="rounded-md overflow-hidden ring-1 ring-white/15 hover:ring-yellow-400/60" title="Français">
+            <img src="images/flags/fr.webp" alt="FR" class="h-5 w-7 object-cover">
+          </button>
+        </div>
 
-        <button id="cartButton" class="relative inline-flex items-center gap-2 bg-yellow-400 text-black font-semibold px-3 py-2 rounded-xl hover:brightness-95 active:brightness-90 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-            <path d="M2.25 3a.75.75 0 0 1 .75-.75h1.386a1.5 1.5 0 0 1 1.415 1.02l.519 1.557h12.18a.75.75 0 0 1 .728.936l-1.5 6A.75.75 0 0 1 17 12.75H7.03l-.3.9a.75.75 0 0 0 .71 1.05H18a.75.75 0 0 1 0 1.5H7.44a2.25 2.25 0 1 1-2.1-3h.09l1.62-4.86L5.22 5.25H3a.75.75 0 0 1-.75-.75Z"/>
-          </svg>
-          <span>Carrinho</span>
-          <span id="cartCount" class="absolute -right-2 -top-2 text-xs bg-black text-yellow-400 border border-yellow-400 rounded-full px-1.5 py-0.5">0</span>
-        </button>
       </div>
     </div>
 
@@ -62,6 +64,26 @@
       </div>
     </div>
   </header>
+
+  <!-- NOVA BARRA DE AÇÕES: Busca + Carrinho (agora abaixo do topo) -->
+<section id="actions" class="border-b border-white/10 bg-white/5/0">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+    <label class="relative flex-1">
+      <input id="searchInput" type="search" placeholder="Buscar código ou modelo..." class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 pl-9 text-sm outline-none focus:border-yellow-400/60" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-white/50 absolute left-2.5 top-1/2 -translate-y-1/2">
+        <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.2 12.05l4.25 4.25a.75.75 0 1 0 1.06-1.06l-4.25-4.25A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clip-rule="evenodd"/>
+      </svg>
+    </label>
+
+    <button id="cartButton" class="relative inline-flex items-center justify-center gap-2 bg-yellow-400 text-black font-semibold px-3 py-2 rounded-xl hover:brightness-95 active:brightness-90 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+        <path d="M2.25 3a.75.75 0 0 1 .75-.75h1.386a1.5 1.5 0 0 1 1.415 1.02l.519 1.557h12.18a.75.75 0 0 1 .728.936l-1.5 6A.75.75 0 0 1 17 12.75H7.03l-.3.9a.75.75 0 0 0 .71 1.05H18a.75.75 0 0 1 0 1.5H7.44a2.25 2.25 0 1 1-2.1-3h.09l1.62-4.86L5.22 5.25H3a.75.75 0 0 1-.75-.75Z"/>
+      </svg>
+      <span> Carrinho</span>
+      <span id="cartCount" class="absolute -right-2 -top-2 text-xs bg-black text-yellow-400 border border-yellow-400 rounded-full px-1.5 py-0.5">0</span>
+    </button>
+  </div>
+</section>
 
   <main>
     <section id="destaques" class="max-w-7xl mx-auto px-4 pt-8 scroll-mt-24">
@@ -128,34 +150,28 @@
       <div id="pagination" class="mt-8 flex items-center justify-center gap-2 flex-wrap"></div>
     </section>
 
-    <!-- NOVA SEÇÃO: Montagem das rodas (vídeo incorporado) -->
-    <section id="montagem" class="max-w-7xl mx-auto px-4 pt-2 pb-12 scroll-mt-24">
+    <!-- NOVA SEÇÃO: Como montar (vídeo) -->
+    <section id="assembly" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-bold">Como montar as rodas</h2>
-        <div class="text-xs sm:text-sm text-white/60">Guia rápido em vídeo</div>
+        <div class="text-xs sm:text-sm text-white/60">Vídeo passo a passo</div>
       </div>
-      <div class="grid gap-4 sm:grid-cols-2">
-        <div class="text-sm text-white/80 leading-relaxed bg-white/5 border border-white/10 rounded-2xl p-5">
-          <p class="mb-2">Assista ao vídeo com o passo a passo da montagem das rodas. Dica: ative as legendas se precisar.</p>
-          <ul class="list-disc pl-5 space-y-1">
-            <li>Separe pneus, aros e parafusos.</li>
-            <li>Encaixe o pneu no aro com cuidado para não marcar.</li>
-            <li>Faça o aperto final sem forçar para evitar folgas.</li>
-          </ul>
-        </div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-3">
-          <div class="relative w-full" style="padding-top: 56.25%;">
-            <iframe
-              class="absolute inset-0 w-full h-full rounded-xl"
-              src="https://www.youtube-nocookie.com/embed/CcKVOC8uVE8"
-              title="Como montar as rodas - Olavo Scale Wheels"
-              loading="lazy"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
+
+      <p class="text-white/80 text-sm mb-3">
+        Assista ao tutorial abaixo. Ele abre aqui mesmo na página.
+      </p>
+
+      <div class="relative aspect-video w-full bg-black/30 rounded-2xl overflow-hidden border border-white/10">
+        <iframe
+          id="assemblyVideoFrame"
+          class="w-full h-full"
+          src=""                 <!-- o app.js define a URL segura (nocookie) -->
+          title="Guia de Montagem das Rodas"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
       </div>
     </section>
 
