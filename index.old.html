@@ -68,7 +68,7 @@
   <!-- NOVA BARRA DE AÇÕES: Busca + Carrinho (agora abaixo do topo) -->
 <section id="actions" class="border-b border-white/10 bg-white/5/0">
   <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-    <label data-i18n="cart.customerName|text" class="relative flex-1">
+    <label class="relative flex-1">
       <input id="searchInput" type="search" placeholder="Buscar código ou modelo..." class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 pl-9 text-sm outline-none focus:border-yellow-400/60" />
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-white/50 absolute left-2.5 top-1/2 -translate-y-1/2">
         <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.2 12.05l4.25 4.25a.75.75 0 1 0 1.06-1.06l-4.25-4.25A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clip-rule="evenodd"/>
@@ -165,7 +165,7 @@
         <iframe
           id="assemblyVideoFrame"
           class="w-full h-full"
-          src=""                 <!-- o app.js define a URL segura (nocookie) -- loading="lazy" title="Guia de Montagem das Rodas" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+          src=""                 <!-- o app.js define a URL segura (nocookie) -->
           loading="lazy"
           title="Guia de Montagem das Rodas"
           frameborder="0"
@@ -264,14 +264,14 @@
 
     <section id="agenda" class="max-w-7xl mx-auto px-4 pt-2 pb-10 scroll-mt-24">
       <div class="mb-4 flex items-center justify-between">
-        <h2 class="text-xl sm:text-2xl font-bold" data-i18n="common.agenda|text">Agenda</h2>
+        <h2 class="text-xl sm:text-2xl font-bold">Onde estaremos</h2>
         <div class="text-xs sm:text-sm text-white/60">Agenda de eventos</div>
       </div>
       <div class="relative">
         <div id="eventsStage" class="grid place-items-center min-h-[340px]"></div>
         <div class="flex items-center justify-end gap-2 mt-2">
-          <button id="eventsPrev" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Evento anterior" data-i18n="common.prev|text">Anterior</button>
-          <button id="eventsNext" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Próximo evento" data-i18n="common.next|text">Próximo</button>
+          <button id="eventsPrev" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Evento anterior">‹</button>
+          <button id="eventsNext" class="size-9 grid place-items-center rounded-full border border-white/15 hover:bg-white/10" aria-label="Próximo evento">›</button>
         </div>
       </div>
     </section>
@@ -347,7 +347,9 @@
       </div>
 
 
-      <button data-i18n="cart.sendWhats|text" id="whatsCheckout" class="w-full bg-yellow-400 text-black font-semibold px-4 py-3 rounded-xl hover:brightness-95 active:brightness-90 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>Enviar pedido via WhatsApp</button>
+      <button id="whatsCheckout" class="w-full bg-yellow-400 text-black font-semibold px-4 py-3 rounded-xl hover:brightness-95 active:brightness-90 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+      Enviar pedido via WhatsApp
+      </button>
       <p class="text-[11px] text-white/50">Abriremos seu WhatsApp com a mensagem do pedido já preenchida.</p>
     </div>
   </aside>

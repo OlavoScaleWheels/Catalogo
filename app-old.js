@@ -2,14 +2,184 @@
    Olavo Scale Wheels – app.js
    =========================== */
 
-
-// ▶️ ID do vídeo de montagem (YouTube nocookie)
-const ASSEMBLY_VIDEO_ID = "COLOQUE_AQUI_O_VIDEO_ID"; // substitua pelo ID real
 /* ======= CONFIG GERAL ======= */
 const WHATSAPP_NUMBER = "351913624727"; // PT (DDI 351) + número, apenas dígitos
 const COST_AZUL = 2.50;
 const COST_REGISTRADO = 4.50;
 const COST_INTERNACIONAL = 7.50;
+
+/* ======= AGENDA: fonte de dados ======= */
+// Você pode manter aqui ou mover para um JSON futuramente.
+// Datas no formato ISO (YYYY-MM-DD) para ordenação confiável.
+const EVENTS = [
+// Exemplo de preenchimento – substitua pelos seus
+{ date: "2025-09-12", title: "Encontro de Modelistas – Porto", location: "Porto, PT", link: "https://example.com/evento-porto", image: "assets/events/porto.jpg" },
+{ date: "2025-10-05", title: "Workshop – Pintura de Rodas", location: "Lisboa, PT", link: "https://example.com/workshop-lx", image: "assets/events/workshop.jpg" },
+{ date: "2025-11-02", title: "Feira Miniaturas", location: "Madrid, ES", link: "https://example.com/madrid", image: "assets/events/madrid.jpg" },
+{ date: "2026-01-18", title: "Open Day – OSW", location: "Lisboa, PT", link: "https://example.com/openday", image: "assets/events/openday.jpg" },
+];
+
+/* ======= I18N ======= */
+const I18N = {
+pt: {
+common: {
+agenda: "Agenda",
+prev: "Anterior",
+next: "Próximo",
+learnMore: "Saber mais",
+noEvents: "Sem eventos futuros no momento. Volte em breve!",
+},
+cart: {
+customerName: "Nome do cliente (opcional)",
+sendWhats: "Enviar pedido via WhatsApp",
+unpricedWarn: "Alguns itens estão sem preço. Remova-os ou defina o preço para finalizar o pedido.",
+unpricedAlert: "Há item(s) sem preço no carrinho. Remova-os ou defina o preço para finalizar.",
+subtotal: "Subtotal",
+shipping: "Envio",
+total: "Total",
+},
+shipping: {
+azul: "Azul",
+registrado: "Registrado",
+internacional: "Internacional",
+},
+},
+en: {
+common: {
+agenda: "Schedule",
+prev: "Prev",
+next: "Next",
+learnMore: "Learn more",
+noEvents: "No upcoming events right now. Check back soon!",
+},
+cart: {
+customerName: "Customer name (optional)",
+sendWhats: "Send order via WhatsApp",
+unpricedWarn: "Some items have no price. Remove them or set a price to finish your order.",
+unpricedAlert: "There are items without price in the cart. Remove them or set a price to proceed.",
+subtotal: "Subtotal",
+shipping: "Shipping",
+total: "Total",
+},
+shipping: {
+azul: "Blue Mail",
+registrado: "Registered",
+internacional: "International",
+},
+},
+es: {
+common: {
+agenda: "Agenda",
+prev: "Anterior",
+next: "Siguiente",
+learnMore: "Saber más",
+noEvents: "No hay eventos futuros por el momento. ¡Vuelve pronto!",
+},
+cart: {
+customerName: "Nombre del cliente (opcional)",
+sendWhats: "Enviar pedido por WhatsApp",
+unpricedWarn: "Algunos artículos no tienen precio. Elimínalos o define un precio para finalizar el pedido.",
+unpricedAlert: "Hay artículos sin precio en el carrito. Elimínalos o define un precio para continuar.",
+subtotal: "Subtotal",
+shipping: "Envío",
+total: "Total",
+},
+shipping: {
+azul: "Azul",
+registrado: "Registrado",
+internacional: "Internacional",
+},
+},
+fr: {
+common: {
+agenda: "Agenda",
+prev: "Préc.",
+next: "Suiv.",
+learnMore: "En savoir plus",
+noEvents: "Aucun événement à venir pour le moment. Revenez bientôt !",
+},
+cart: {
+customerName: "Nom du client (facultatif)",
+sendWhats: "Envoyer la commande via WhatsApp",
+unpricedWarn: "Certains articles n'ont pas de prix. Retirez-les ou définissez un prix pour finaliser.",
+unpricedAlert: "Il y a des articles sans prix dans le panier. Retirez-les ou définissez un prix pour continuer.",
+subtotal: "Sous-total",
+shipping: "Livraison",
+total: "Total",
+},
+shipping: {
+azul: "Azul",
+registrado: "Recommandé",
+internacional: "International",
+},
+}
+};
+const ENABLED_LANGS = ["pt", "en", "es", "fr"]; // remova o que não quiser exibir
+let currentLang = localStorage.getItem("osw_lang") || "pt";
+
+
+function t(key) {
+// key: "cart.unpricedAlert" etc.
+const [ns, k] = key.split(".");
+return (I18N[currentLang]?.[ns]?.[k]) || (I18N.pt?.[ns]?.[k]) || key;
+}
+
+
+function setLang(lang) {
+if (!ENABLED_LANGS.includes(lang)) return;
+currentLang = lang;
+localStorage.setItem("osw_lang", lang);
+document.documentElement.lang = lang;
+applyI18n();
+}
+function applyI18n() {
+// data-i18n="cart.sendWhats|text" ou "cart.customerName|placeholder"
+document.querySelectorAll("[data-i18n]").forEach(el => {
+const [key, attr = "text"] = el.getAttribute("data-i18n").split("|");
+const val = t(key);
+if (attr === "text") el.textContent = val;
+else el.setAttribute(attr, val);
+});
+// Atualiza textos que vêm de JS (placeholders, etc.) se necessário
+}
+
+
+const ENABLED_LANGS = ["pt", "en", "es", "fr"]; // remova o que não quiser exibir
+let currentLang = localStorage.getItem("osw_lang") || "pt";
+
+
+function t(key) {
+// key: "cart.unpricedAlert" etc.
+const [ns, k] = key.split(".");
+return (I18N[currentLang]?.[ns]?.[k]) || (I18N.pt?.[ns]?.[k]) || key;
+}
+
+
+function setLang(lang) {
+if (!ENABLED_LANGS.includes(lang)) return;
+currentLang = lang;
+localStorage.setItem("osw_lang", lang);
+document.documentElement.lang = lang;
+applyI18n();
+}
+
+
+function applyI18n() {
+// data-i18n="cart.sendWhats|text" ou "cart.customerName|placeholder"
+document.querySelectorAll("[data-i18n]").forEach(el => {
+const [key, attr = "text"] = el.getAttribute("data-i18n").split("|");
+const val = t(key);
+if (attr === "text") el.textContent = val;
+else el.setAttribute(attr, val);
+});
+// Atualiza textos que vêm de JS (placeholders, etc.) se necessário
+}
+
+
+// ▶️ ID do vídeo de montagem (YouTube)
+// Ex.: https://www.youtube.com/watch?v=AbCdEfGh -> ASSEMBLY_VIDEO_ID = "AbCdEfGh"
+// Use sempre o domínio nocookie; o código abaixo monta a URL embed com parâmetros de privacidade
+const ASSEMBLY_VIDEO_ID = "CcKVOC8uVE8"; // TODO: substituir pelo ID real
 
 /* ======= AUTOPREENCHIMENTO A PARTIR DO ID (MMM.CCC.TT) ======= */
 const COLOR_MAP = { "001": "Cromado", "002": "Dourado", "003": "Preto", "020": "Azul" };
@@ -110,14 +280,109 @@ const state = {
 };
 
 function saveCart() {
-  localStorage.setItem("osw_cart", JSON.stringify(state.cart));
-  updateCartBadge();
-  renderCart();
-  updateTotals();
+localStorage.setItem("osw_cart", JSON.stringify(state.cart));
+updateCartBadge();
+renderCart();
+updateTotals();
+updateCheckoutState();
 }
 
 /* ======= HELPERS ======= */
 const byId = (id) => document.getElementById(id);
+
+/* ======= AGENDA: helpers e estado ======= */
+const agenda = {
+pageSize: 2, // quantos eventos por "página"
+startIndex: 0, // índice inicial atual
+};
+
+
+function parseISO(d) { return new Date(d + 'T00:00:00'); }
+function isInFutureOrToday(d) {
+const today = new Date(); today.setHours(0,0,0,0);
+const dd = parseISO(d); dd.setHours(0,0,0,0);
+return dd >= today;
+}
+function formatPtDate(d) {
+// Ex.: 12 set 2025
+const dt = parseISO(d);
+return dt.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+function getSortedUpcomingEvents() {
+return EVENTS
+.filter(ev => isInFutureOrToday(ev.date))
+.sort((a,b) => parseISO(a.date) - parseISO(b.date));
+}
+function renderAgenda() {
+const stage = document.getElementById('eventsStage');
+if (!stage) return;
+
+
+const data = getSortedUpcomingEvents();
+const { pageSize, startIndex } = agenda;
+const slice = data.slice(startIndex, startIndex + pageSize);
+
+
+// Estado vazio (sem eventos futuros)
+if (data.length === 0) {
++ stage.innerHTML = `<div class="rounded-xl border border-white/10 p-4 text-white/70">${t('common.noEvents')}</div>`;
+updateAgendaControls();
+return;
+}
+
+
+// Renderizar cartões
+stage.innerHTML = slice.map(ev => `
+<article class="flex gap-3 items-center rounded-xl border border-white/10 bg-black/30 p-3">
+${ev.image ? `<img src="${ev.image}" alt="${ev.title}" class="w-20 h-20 object-cover rounded-lg">` : ''}
+<div class="flex-1">
+<h4 class="text-white font-semibold leading-tight">${ev.title}</h4>
+<p class="text-white/70 text-sm">${formatPtDate(ev.date)} • ${ev.location || ''}</p>
+${ev.link ? `<a href="${ev.link}" target="_blank" rel="noopener" class="text-yellow-300 text-sm underline">Saber mais</a>` : ''}
+</div>
+</article>
+`).join('');
+
+
+updateAgendaControls();
+}
+
+
+function updateAgendaControls() {
+const btnPrev = document.getElementById('eventsPrev');
+const btnNext = document.getElementById('eventsNext');
+const total = getSortedUpcomingEvents().length;
+
+
+const canPrev = agenda.startIndex > 0;
+const canNext = (agenda.startIndex + agenda.pageSize) < total;
+
+
+if (btnPrev) btnPrev.disabled = !canPrev;
+if (btnNext) btnNext.disabled = !canNext;
+}
+
+
+function goAgendaPrev() {
+if (agenda.startIndex === 0) return;
+agenda.startIndex = Math.max(0, agenda.startIndex - agenda.pageSize);
+renderAgenda();
+}
+function goAgendaNext() {
+const total = getSortedUpcomingEvents().length;
+if (agenda.startIndex + agenda.pageSize >= total) return;
+agenda.startIndex = Math.min(total - 1, agenda.startIndex + agenda.pageSize);
+renderAgenda();
+}
+
+
+function initAgenda() {
+// Ajustar página inicial para o primeiro bloco que tenha eventos
+agenda.startIndex = 0;
+renderAgenda();
+document.getElementById('eventsPrev')?.addEventListener('click', goAgendaPrev);
+document.getElementById('eventsNext')?.addEventListener('click', goAgendaNext);
+}
 
 /* =========================
    CARROSSEL TOP 10 (header)
@@ -148,6 +413,28 @@ function createSlide(p) {
     priceChip;
 
   return slide;
+}
+// Verifica se há itens sem preço no carrinho
+function hasUnpricedItems() {
+for (const it of state.cart) {
+// Produto de referência
+const p = PRODUCTS?.find(pp => pp.id === it.id);
+// Preço pode vir da linha ou do catálogo ("price" ou "preco")
+const price = (it.price ?? it.preco ?? p?.price ?? p?.preco);
+if (!(typeof price === 'number' && isFinite(price))) return true;
+}
+return false;
+}
+
+
+// Habilita/Desabilita o botão e mostra/oculta o aviso
+function updateCheckoutState() {
+const btn = byId('whatsCheckout');
+const warn = byId('cartWarnUnpriced');
+const unpriced = hasUnpricedItems();
+ const disabled = (state.totalItems === 0) || unpriced;
+ if (btn) btn.disabled = disabled;
+ if (warn) warn.classList.toggle('hidden', !(unpriced && state.totalItems > 0));
 }
 
 function renderCarousel() {
@@ -280,8 +567,12 @@ function createCard(p) {
   }
 
   const priceBadge = (p.preco != null)
-  ? `<div class="bg-yellow-400 text-black text-sm font-semibold px-2.5 py-1.5 rounded-lg shadow whitespace-nowrap">${formatEUR(p.preco)}</div>`
-  : '';
+    ? (
+      '<div class="bg-yellow-400 text-black text-sm font-semibold px-2.5 py-1.5 rounded-lg shadow whitespace-nowrap">'
+      + formatEUR(p.preco) +
+      '</div>'
+    )
+    : '<div></div>';
 
   const disabledAttr = p.estoque ? '' : 'disabled';
 
@@ -434,12 +725,17 @@ function addToCart(product, qty) {
   if (toAdd <= 0) { alert('Quantidade selecionada excede o estoque disponível.'); return; }
   if (existing) existing.qty += toAdd; else state.cart.push({ id: product.id, codigo: product.codigo, modelo: product.modelo, qty: toAdd });
   saveCart(); openCart();
+  updateCheckoutState();
 }
 
 function removeFromCart(id) {
-  const idx = state.cart.findIndex(it => it.id === id);
-  if (idx >= 0) state.cart.splice(idx, 1);
-  saveCart();
+const i = state.cart.findIndex(x => x.id === id);
+if (i !== -1) {
+state.cart.splice(i, 1);
+state.totalItems = state.cart.reduce((a, b) => a + (b.qty || 1), 0);
+saveCart();
+updateCheckoutState(); // ⬅️ garante esconder aviso quando necessário
+}
 }
 
 function updateCartBadge() {
@@ -448,7 +744,7 @@ function updateCartBadge() {
   const whatsBtn = byId('whatsCheckout');
   if (countEl) countEl.textContent = state.totalItems;
   if (totalItemsEl) totalItemsEl.textContent = state.totalItems;
-  if (whatsBtn) whatsBtn.disabled = state.totalItems === 0;
+  if (whatsBtn) whatsBtn.disabled = (state.totalItems === 0) || hasUnpricedItems();
 }
 
 function renderCart() {
@@ -529,25 +825,25 @@ function currentShippingCost() {
 }
 
 function updateTotals() {
-  const { sum, anyPriced } = computeSubtotal();
-  const shipping = currentShippingCost();
-  const subtotalEl = byId('cartSubtotal');
-  if (subtotalEl) subtotalEl.textContent = anyPriced ? formatEUR(sum) : '—';
+const { sum, anyPriced } = computeSubtotal();
+const shipping = currentShippingCost();
 
-  let shippingText = '—';
-  if (state.shipping.method === 'correio_azul') shippingText = formatEUR(COST_AZUL);
-  else if (state.shipping.method === 'correio_registrado') shippingText = formatEUR(COST_REGISTRADO);
-  else if (state.shipping.method === 'correio_internacional') shippingText = formatEUR(COST_INTERNACIONAL);
-  else if (state.shipping.method === 'vinted') shippingText = 'a calcular';
-  else if (state.shipping.method === 'wallapop') shippingText = 'a calcular';
 
-  const shipEl = byId('shippingValue');
-  if (shipEl) shipEl.textContent = shippingText;
+const subtotalEl = byId('cartSubtotal');
+if (subtotalEl) subtotalEl.textContent = anyPriced ? formatEUR(sum) : '—';
 
-  let grand = sum;
-  if (typeof shipping === 'number') grand += shipping;
-  const grandEl = byId('cartGrandTotal');
-  if (grandEl) grandEl.textContent = anyPriced ? formatEUR(grand) : '—';
+
+const shippingEl = byId('shippingValue');
+if (shippingEl) shippingEl.textContent = (anyPriced && typeof shipping === 'number') ? formatEUR(shipping) : '—';
+
+
+const grand = (anyPriced ? sum : 0) + (typeof shipping === 'number' ? shipping : 0);
+const grandEl = byId('cartGrandTotal');
+if (grandEl) grandEl.textContent = anyPriced ? formatEUR(grand) : '—';
+
+
+// Mantém botão/aviso sincronizados sempre que valores mudarem
+updateCheckoutState();
 }
 
 /* ======= WhatsApp ======= */
@@ -584,6 +880,7 @@ function buildWhatsAppMessage() {
   return encodeURIComponent([header, who, '\nItens:', ...lines, totalItemsLine, subtotalLine, shippingLine, grandLine, '\nObrigado!'].filter(Boolean).join('\n'));
 }
 function sendToWhatsApp() {
+  if (hasUnpricedItems()) { alert(t('cart.unpricedAlert')); return; }
   if (!/^\d+$/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
   const text = buildWhatsAppMessage();
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
@@ -740,6 +1037,27 @@ async function renderClientsCarousel(){
   const stop=()=> clearInterval(auto);
   start(); track.addEventListener('mouseenter', stop); track.addEventListener('mouseleave', start);
 }
+// Monta a URL segura (youtube-nocookie) e injeta no iframe do guia de montagem
+function setAssemblyVideo() {
+const frame = document.getElementById('assemblyVideoFrame');
+if (!frame) return;
+
+
+const id = String(ASSEMBLY_VIDEO_ID || '').trim();
+if (!id) {
+// Se não houver ID definido, evita um iframe vazio
+frame.replaceWith(document.createComment('assemblyVideoFrame removido: defina ASSEMBLY_VIDEO_ID'));
+return;
+}
+
+
+const src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0&modestbranding=1&playsinline=1`;
+frame.setAttribute('src', src);
+frame.setAttribute('loading', 'lazy');
+frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+frame.setAttribute('title', 'Guia de Montagem das Rodas');
+}
 
 /* ======= Decodificador de código ======= */
 function decodeArticle(code) {
@@ -761,26 +1079,10 @@ function openCart() { if (drawer && backdrop) { drawer.classList.remove('transla
 function closeCart() { if (drawer && backdrop) { drawer.classList.add('translate-x-full'); backdrop.classList.add('hidden'); } }
 
 /* ======= INIT ======= */
-
-// Monta a URL segura (youtube-nocookie) e injeta no iframe do guia de montagem
-function setAssemblyVideo() {
-  const frame = document.getElementById('assemblyVideoFrame');
-  if (!frame) return;
-  const id = String(ASSEMBLY_VIDEO_ID || '').trim();
-  if (!id) { frame.replaceWith(document.createComment('assemblyVideoFrame removido: defina ASSEMBLY_VIDEO_ID')); return; }
-  const src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0&modestbranding=1&playsinline=1`;
-  frame.setAttribute('src', src);
-  frame.setAttribute('loading', 'lazy');
-  frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-  frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-  frame.setAttribute('title', 'Guia de Montagem das Rodas');
-}
-
-
 function init() {
-  // Vídeo: guia de montagem
-  setAssemblyVideo();
   const yearEl = byId('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+  // Vídeo: guia de montagem
+ setAssemblyVideo();
 
   // Carrossel Top 10
   renderCarousel();
@@ -791,6 +1093,7 @@ function init() {
   renderCatalog("");
   updateCartBadge();
   renderCart();
+  updateCheckoutState();
 
   // Drawer
   byId('cartButton')?.addEventListener('click', openCart);
@@ -829,6 +1132,29 @@ function init() {
 
   // Carrossel de clientes
   renderClientsCarousel();
+  // Agenda (eventos)
+ initAgenda();
+
+ // Idioma
+ document.getElementById('langPT')?.addEventListener('click', () => setLang('pt'));
+ document.getElementById('langEN')?.addEventListener('click', () => setLang('en'));
+ document.getElementById('langES')?.addEventListener('click', () => setLang('es'));
+ document.getElementById('langFR')?.addEventListener('click', () => setLang('fr'));
+ // Ocultar automaticamente bandeiras não habilitadas
+ [
+ ['langPT', 'pt'],
+ ['langEN', 'en'],
+ ['langES', 'es'],
+ ['langFR', 'fr']
+ ].forEach(([id, code]) => {
+ const btn = document.getElementById(id);
+ if (btn) btn.style.display = ENABLED_LANGS.includes(code) ? '' : 'none';
+ });
+
+ // Aplica idioma salvo (ou pt)
+ setLang(currentLang);
+}
+
 }
 
 document.addEventListener('DOMContentLoaded', init);
