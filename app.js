@@ -168,7 +168,6 @@ function scrollByCards(dir = 1) {
 /* ======================
    GALERIA (POP-UP) FOTOS
    ====================== */
-
 async function probeImage(url) {
   return new Promise(resolve => {
     const img = new Image();
@@ -179,7 +178,6 @@ async function probeImage(url) {
 }
 
 async function listImagesForProduct(p) {
-
   const m = p.img.match(/^(.*\/)0001(\.\w+)$/);
   if (!m) return [p.img];
   const base = m[1];
@@ -191,7 +189,6 @@ async function listImagesForProduct(p) {
     const idx = String(i).padStart(4, '0');
     candidates.push(base + idx + ext);
   }
-
   for (let i = 1; i <= 20; i++) {
     const idx = String(i).padStart(4, '0');
     candidates.push(base + idx + otherExt);
@@ -203,7 +200,8 @@ async function listImagesForProduct(p) {
     if (await probeImage(url)) found.push(url);
   }
   return found.length ? found : [p.img];
-} 
+}
+
 function ensureGalleryModal() {
   if (byId('galleryModal')) return byId('galleryModal');
 
@@ -332,7 +330,7 @@ function createCard(p) {
     }
   });
   imgEl?.addEventListener('mouseleave', () => { imgEl.setAttribute('src', originalSrc); });
-  
+
   const openArea = card.querySelector('[data-open-gallery]');
   openArea?.addEventListener('click', async () => {
     await openGalleryForProduct(p);
@@ -879,6 +877,77 @@ function init() {
 
   // Agenda
   renderEventsCarousel();
+}
+/* =====================
+I18N (PT / EN / ES / FR)
+===================== */
+const I18N = {
+pt: {
+'cart.customerName': 'Seu nome',
+'cart.sendWhats': 'Enviar pedido via WhatsApp',
+'common.agenda': 'Agenda',
+'common.prev': 'Anterior',
+'common.next': 'Próxima'
+},
+en: {
+'cart.customerName': 'Your name',
+'cart.sendWhats': 'Send order via WhatsApp',
+'common.agenda': 'Events',
+'common.prev': 'Prev',
+'common.next': 'Next'
+},
+es: {
+'cart.customerName': 'Tu nombre',
+'cart.sendWhats': 'Enviar pedido por WhatsApp',
+'common.agenda': 'Agenda',
+'common.prev': 'Anterior',
+'common.next': 'Siguiente'
+},
+fr: {
+'cart.customerName': 'Votre nom',
+'cart.sendWhats': 'Envoyer la commande via WhatsApp',
+'common.agenda': 'Agenda',
+'common.prev': 'Précédent',
+'common.next': 'Suivant'
+}
+};
+
+
+function detectLang(){
+const nav = (navigator.language || 'pt').toLowerCase();
+if (nav.startsWith('pt')) return 'pt';
+if (nav.startsWith('es')) return 'es';
+if (nav.startsWith('fr')) return 'fr';
+return 'en';
+}
+function getLang(){ return localStorage.getItem('osw_lang') || detectLang(); }
+function langToHtml(code){
+switch(code){
+case 'pt': return 'pt-PT';
+case 'es': return 'es-ES';
+case 'fr': return 'fr-FR';
+default: return 'en';
+}
+}
+function t(key){
+const lang = getLang();
+return (I18N[lang] && I18N[lang][key]) || (I18N.en && I18N.en[key]) || (I18N.pt && I18N.pt[key]) || key;
+}
+function applyI18n(){
+const lang = getLang();
+// <html lang="...">
+document.documentElement.setAttribute('lang', langToHtml(lang));
+// Aplica em todos os elementos com data-i18n="chave|prop"
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const [rawKey, rawProp] = (el.getAttribute('data-i18n') || '').split('|');
+const key = (rawKey || '').trim();
+const prop = (rawProp || 'text').trim();
+if (!key) return;
+const val = t(key);
+if (prop === 'text') el.textContent = val;
+else if (prop === 'html') el.innerHTML = val;
+else el.setAttribute(prop, val);
+});
 }
 
 document.addEventListener('DOMContentLoaded', init);
