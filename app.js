@@ -1,10 +1,10 @@
+
 /* ===========================
-   Olavo Scale Wheels – app.js
+   Olavo Scale Wheels – app.js (v1 com correções)
    =========================== */
 
-
 // ▶️ ID do vídeo de montagem (YouTube nocookie)
-const ASSEMBLY_VIDEO_ID = "COLOQUE_AQUI_O_VIDEO_ID"; // substitua pelo ID real
+const ASSEMBLY_VIDEO_ID = "COLOQUE_AQUI_O_VIDEO_ID"; // ex.: "dQw4w9WgXcQ"
 /* ======= CONFIG GERAL ======= */
 const WHATSAPP_NUMBER = "351913624727"; // PT (DDI 351) + número, apenas dígitos
 const COST_AZUL = 2.50;
@@ -168,7 +168,7 @@ function scrollByCards(dir = 1) {
 /* ======================
    GALERIA (POP-UP) FOTOS
    ====================== */
-// tenta descobrir imagens 0001..0020 .jpg/.png
+
 async function probeImage(url) {
   return new Promise(resolve => {
     const img = new Image();
@@ -179,11 +179,11 @@ async function probeImage(url) {
 }
 
 async function listImagesForProduct(p) {
-  // base: .../0001.jpg -> prefix ".../" e ext ".jpg"
+
   const m = p.img.match(/^(.*\/)0001(\.\w+)$/);
   if (!m) return [p.img];
   const base = m[1];
-  const ext = m[2]; // ex .jpg
+  const ext = m[2];
   const otherExt = ext.toLowerCase() === '.jpg' ? '.png' : '.jpg';
 
   const candidates = [];
@@ -191,7 +191,7 @@ async function listImagesForProduct(p) {
     const idx = String(i).padStart(4, '0');
     candidates.push(base + idx + ext);
   }
-  // tenta também a outra extensão (alguns diretórios têm png)
+
   for (let i = 1; i <= 20; i++) {
     const idx = String(i).padStart(4, '0');
     candidates.push(base + idx + otherExt);
@@ -203,9 +203,7 @@ async function listImagesForProduct(p) {
     if (await probeImage(url)) found.push(url);
   }
   return found.length ? found : [p.img];
-}
-
-// cria (se não existir) o modal minimalista
+} 
 function ensureGalleryModal() {
   if (byId('galleryModal')) return byId('galleryModal');
 
@@ -251,12 +249,21 @@ async function openGalleryForProduct(p) {
   }
   function prev() { idx = (idx - 1 + list.length) % list.length; update(); }
   function next() { idx = (idx + 1) % list.length; update(); }
-  function close() { modal.classList.add('hidden'); }
+  function close() {
+    modal.classList.add('hidden');
+    document.removeEventListener('keydown', onKey);
+  }
+  function onKey(e){
+    if(e.key === 'ArrowLeft') prev();
+    else if(e.key === 'ArrowRight') next();
+    else if(e.key === 'Escape') close();
+  }
 
   prevBtn.onclick = prev;
   nextBtn.onclick = next;
   closeBtn.onclick = close;
   backdrop.onclick = close;
+  document.addEventListener('keydown', onKey);
 
   update();
   modal.classList.remove('hidden');
@@ -269,7 +276,6 @@ function createCard(p) {
   const card = document.createElement("article");
   card.className = "group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-yellow-400/60 transition";
 
-  // opções do select
   let qtyOptions = '';
   if (p.estoque) {
     for (let i = 1; i <= p.estoque; i++) {
@@ -314,7 +320,6 @@ function createCard(p) {
       '</div>' +
     '</div>';
 
-  // Hover da foto: 0001 -> 0002
   const imgEl = card.querySelector('img');
   const originalSrc = p.img;
   const hoverSrc = originalSrc.replace(/\/0001(\.\w+)?$/, '/0002$1');
@@ -327,8 +332,7 @@ function createCard(p) {
     }
   });
   imgEl?.addEventListener('mouseleave', () => { imgEl.setAttribute('src', originalSrc); });
-
-  // Abrir galeria
+  
   const openArea = card.querySelector('[data-open-gallery]');
   openArea?.addEventListener('click', async () => {
     await openGalleryForProduct(p);
@@ -448,7 +452,7 @@ function updateCartBadge() {
   const whatsBtn = byId('whatsCheckout');
   if (countEl) countEl.textContent = state.totalItems;
   if (totalItemsEl) totalItemsEl.textContent = state.totalItems;
-  if (whatsBtn) whatsBtn.disabled = state.totalItems === 0;
+  if (whatsBtn) whatsBtn.disabled = state.totalItems === 0; // regra base; updateTotals() faz checagem extra
 }
 
 function renderCart() {
@@ -517,6 +521,13 @@ function computeSubtotal() {
   return { sum, anyPriced };
 }
 
+function cartHasUnpriced(){
+  return state.cart.some(it => {
+    const p = PRODUCTS.find(pp => pp.id === it.id);
+    return !p || p.preco == null;
+  });
+}
+
 function currentShippingCost() {
   switch (state.shipping.method) {
     case 'correio_azul': return COST_AZUL;
@@ -548,6 +559,12 @@ function updateTotals() {
   if (typeof shipping === 'number') grand += shipping;
   const grandEl = byId('cartGrandTotal');
   if (grandEl) grandEl.textContent = anyPriced ? formatEUR(grand) : '—';
+
+  // (NOVO) – regra de checkout: bloquear se houver itens sem preço
+  const hasUnpriced = cartHasUnpriced();
+  byId('cartWarnUnpriced')?.classList.toggle('hidden', !hasUnpriced);
+  const checkoutBtn = byId('whatsCheckout');
+  if (checkoutBtn) checkoutBtn.disabled = state.totalItems === 0 || hasUnpriced;
 }
 
 /* ======= WhatsApp ======= */
@@ -585,6 +602,7 @@ function buildWhatsAppMessage() {
 }
 function sendToWhatsApp() {
   if (!/^\d+$/.test(WHATSAPP_NUMBER)) { alert('Configure corretamente o número do WhatsApp (apenas dígitos).'); return; }
+  if (cartHasUnpriced()) { alert('Há itens sem preço no carrinho. Remova-os ou defina o preço antes de finalizar.'); return; }
   const text = buildWhatsAppMessage();
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
 }
@@ -619,12 +637,10 @@ const CLIENTS_DIR = './images/clientes';
 const CLIENTS_MAX = 12;
 const CLIENTS_ALLOWED_EXTS = ['webp','png','jpg','jpeg'];
 
-// util
 const slugify = (s) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-   .toLowerCase().replace(/[^\w]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+   .toLowerCase().replace(/[^\w]+/g,'-').replace(/-+/g,'-').replace(/^-|-$//g,'');
 
-// carrega manifest.json (array de nomes ou {files:[...]})
 async function loadClientsManifest(){
   try{
     const res = await fetch(`${CLIENTS_DIR}/manifest.json?${Date.now()}`);
@@ -632,7 +648,7 @@ async function loadClientsManifest(){
     const data = await res.json();
     if(Array.isArray(data)) return data;
     if(Array.isArray(data?.files)) return data.files;
-  }catch(e){ /* sem manifest -> lista vazia */ }
+  }catch(e){ }
   return [];
 }
 
@@ -660,7 +676,6 @@ function setFlagImage(imgEl, countryRaw){
   tryNext();
 }
 
-// parser do nome do arquivo: "Nome - 031.001.11 - País.ext" (país opcional)
 function parseClientFilename(filename){
   const extMatch = filename.match(/\.([a-z0-9]+)$/i);
   const ext = extMatch ? extMatch[1].toLowerCase() : '';
@@ -760,9 +775,42 @@ const backdrop = byId('backdrop');
 function openCart() { if (drawer && backdrop) { drawer.classList.remove('translate-x-full'); backdrop.classList.remove('hidden'); } }
 function closeCart() { if (drawer && backdrop) { drawer.classList.add('translate-x-full'); backdrop.classList.add('hidden'); } }
 
-/* ======= INIT ======= */
+/* ======= Agenda (simples) ======= */
+const OSW_EVENTS = [];
+function renderEventsCarousel(){
+  const stage = byId('eventsStage');
+  const prev = byId('eventsPrev');
+  const next = byId('eventsNext');
+  if(!stage) return;
 
-// Monta a URL segura (youtube-nocookie) e injeta no iframe do guia de montagem
+  const events = OSW_EVENTS;
+  if(!Array.isArray(events) || events.length === 0){
+    stage.innerHTML = '<div class="text-white/60 text-sm">Sem eventos no momento.</div>';
+    prev?.setAttribute('disabled', true);
+    next?.setAttribute('disabled', true);
+    return;
+  }
+
+  let i = 0;
+  const draw = () => {
+    const ev = events[i];
+    const date = new Date(ev.date);
+    const pretty = isNaN(date) ? ev.date : date.toLocaleDateString('pt-PT', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+    stage.innerHTML = `
+      <article class="w-full max-w-2xl bg-white/5 border border-white/10 rounded-2xl p-5 text-sm">
+        <div class="text-white/60">${pretty}</div>
+        <h3 class="text-lg font-semibold mt-1">${ev.title || ''}</h3>
+        <div class="text-white/70">${ev.location || ''}</div>
+        <p class="text-white/80 mt-2">${ev.desc || ''}</p>
+      </article>`;
+  };
+  draw();
+
+  prev?.addEventListener('click', ()=>{ i = (i - 1 + events.length) % events.length; draw(); });
+  next?.addEventListener('click', ()=>{ i = (i + 1) % events.length; draw(); });
+}
+
+/* ======= INIT ======= */
 function setAssemblyVideo() {
   const frame = document.getElementById('assemblyVideoFrame');
   if (!frame) return;
@@ -775,7 +823,6 @@ function setAssemblyVideo() {
   frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
   frame.setAttribute('title', 'Guia de Montagem das Rodas');
 }
-
 
 function init() {
   // Vídeo: guia de montagem
@@ -829,6 +876,9 @@ function init() {
 
   // Carrossel de clientes
   renderClientsCarousel();
+
+  // Agenda
+  renderEventsCarousel();
 }
 
 document.addEventListener('DOMContentLoaded', init);

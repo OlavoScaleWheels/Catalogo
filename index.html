@@ -161,18 +161,15 @@
         Assista ao tutorial abaixo. Ele abre aqui mesmo na página.
       </p>
 
+      <!-- Como montar (vídeo) -->
       <div class="relative aspect-video w-full bg-black/30 rounded-2xl overflow-hidden border border-white/10">
-        <iframe
-          id="assemblyVideoFrame"
-          class="w-full h-full"
-          src=""                 <!-- o app.js define a URL segura (nocookie) -- loading="lazy" title="Guia de Montagem das Rodas" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
-          loading="lazy"
-          title="Guia de Montagem das Rodas"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen>
-        </iframe>
+      <!-- O app.js injeta a URL segura (youtube-nocookie) e os atributos -->
+      <iframe
+      id="assemblyVideoFrame"
+      class="w-full h-full"
+      title="Guia de Montagem das Rodas"
+      allowfullscreen>
+      </iframe>
       </div>
     </section>
 
